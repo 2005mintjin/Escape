@@ -14,9 +14,8 @@ export function setupNightLighting(scene){
  // Small lights in surviving windows break up the dark facades.
  for(const x of [1,25,43,58]){const light=new THREE.PointLight('#d18b55',9,7,1.5);light.position.set(x,2.2,-13);scene.add(light);const window=new THREE.Mesh(new THREE.PlaneGeometry(.3,.5),new THREE.MeshBasicMaterial({color:'#986c3b'}));window.position.set(x,2.2,-12.9);scene.add(window);}
 }
-export function tintCharacter(material,x,alert=false,flash=false){
+export function tintCharacter(material,x,flash=false){
  const pool=Math.max(...lampPositions.map(lamp=>Math.exp(-(((x-lamp)/4.5)**2))));
  material.color.setRGB(.42+pool*.48,.49+pool*.35,.61+pool*.2);
- if(alert)material.color.multiply(new THREE.Color('#ffb6a4'));
  if(flash)material.color.set('#ffe5ab');
 }

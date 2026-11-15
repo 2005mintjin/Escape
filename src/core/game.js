@@ -6,13 +6,14 @@ import {visible,bodyPoint,advanceDetection} from '../systems/detection.js';
 import {rally,radioStep,investigate} from '../systems/guardResponse.js';
 import {beginMelee,stepMelee} from '../systems/melee.js';
 import {movePlayer} from '../systems/movement.js';
-import {blocked,shotImpact} from '../systems/collision.js';
+import {blocked} from '../systems/collision.js';
 export class Game {
  constructor(){this.reset();}
- reset(){this.player={x:level.start,z:config.playerZ,crouch:false,aiming:false,weapon:'rifle',deathElapsed:0,stamina:config.staminaSeconds,exhausted:false,recoverDelay:0,direction:1,ammo:config.magazine,reserve:config.reserve,reload:0,shot:0,knifeCooldown:0,melee:null,dead:false};this.enemies=definitions.map(e=>({...e,z:config.enemyZ,state:'Patrol',meter:0,detected:false,hasDetectionStarted:false,notice:0,timer:0,idle:0,dead:false,radio:0,corpseTarget:null,searchTime:0}));this.state='playing';this.lockdown=false;this.time=0;this.tracers=[];this.message='낮은 벽 아래로 이동하세요';}
+ reset(){this.player={x:level.start,z:config.playerZ,crouch:false,aiming:false,weapon:'rifle',deathElapsed:0,health:config.playerHealth,hurt:0,stamina:config.staminaSeconds,exhausted:false,recoverDelay:0,direction:1,ammo:config.magazine,reserve:config.reserve,reload:0,shot:0,knifeCooldown:0,melee:null,dead:false};this.enemies=definitions.map(e=>({...e,z:config.enemyZ,state:'Patrol',meter:0,detected:false,hasDetectionStarted:false,charging:false,notice:0,timer:0,idle:0,dead:false,radio:0,corpseTarget:null,searchTime:0}));this.state='playing';this.lockdown=false;this.time=0;this.tracers=[];this.message='낮은 벽 아래로 이동하세요';}
+ damagePlayer(){if(this.state!=='playing')return;const p=this.player;p.health=Math.max(0,p.health-1);p.hurt=.3;if(!p.health){p.dead=true;p.deathElapsed=0;this.state='dying';}}
  stance(input){this.player.crouch=this.player.melee?false:!!input.crouch;this.player.aiming=!!input.aim;}
  switchWeapon(){if(this.state!=='playing'||this.player.melee)return;this.player.weapon=this.player.weapon==='rifle'?'knife':'rifle';}
- update(dt,input){if(this.state==='dying'){this.player.deathElapsed+=dt;if(this.player.deathElapsed>=1)this.state='dead';return;}if(this.state!=='playing')return;this.time+=dt;const p=this.player;this.stance(input);movePlayer(p,dt,input,config);p.shot=Math.max(0,p.shot-dt);p.knifeCooldown=Math.max(0,p.knifeCooldown-dt);stepMelee(this,dt,config,level.walls);
+ update(dt,input){if(this.state==='dying'){this.player.deathElapsed+=dt;if(this.player.deathElapsed>=1)this.state='dead';return;}if(this.state!=='playing')return;this.time+=dt;const p=this.player;this.stance(input);p.hurt=Math.max(0,p.hurt-dt);movePlayer(p,dt,input,config);p.shot=Math.max(0,p.shot-dt);p.knifeCooldown=Math.max(0,p.knifeCooldown-dt);stepMelee(this,dt,config,level.walls);
  if(p.reload>0){p.reload=Math.max(0,p.reload-dt);if(!p.reload){const n=Math.min(config.magazine-p.ammo,p.reserve);p.ammo+=n;p.reserve-=n;}}
  this.tracers=this.tracers.filter(t=>(t.life-=dt)>0);
  for(const e of this.enemies){if(e.dead)continue;const seen=visible(e,p,level.walls);
@@ -22,8 +23,8 @@ export class Game {
   if(e.state!=='Alert'&&e.state!=='Attack'){e.state='Alert';e.timer=config.reactionSeconds;}
   e.timer-=dt;
   if(e.timer<=0){e.state='Attack';e.timer=config.enemyShotInterval;const a={x:e.x,y:1.65,z:e.z},b=bodyPoint(p);
-   if(Math.hypot(b.x-a.x,b.z-a.z)<=e.range){const impact=shotImpact(a,b,level.walls);e.direction=p.x>=e.x?1:-1;this.tracers.push({a,b:impact.point,life:.2,enemy:true});
-    if(!impact.blocked){p.dead=true;p.deathElapsed=0;this.state='dying';break;}
+   if(Math.hypot(b.x-a.x,b.z-a.z)<=e.range){e.direction=p.x>=e.x?1:-1;this.tracers.push({a,b,life:.2,enemy:true});
+    this.damagePlayer();if(p.dead)break;
    }
   }
  }

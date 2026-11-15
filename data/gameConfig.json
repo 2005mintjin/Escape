@@ -25,5 +25,6 @@
   "staminaDelay": 0.8,
   "staminaRestart": 1,
   "suspicionSeconds": 0.55,
-  "enemyShotInterval": 1.1
+  "enemyShotInterval": 1.1,
+  "playerHealth": 3
 }
