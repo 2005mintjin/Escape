@@ -1,0 +1,12 @@
+# Escape 개발 규칙
+- 신규 독립 프로젝트. 기존 체크아웃을 사용하고 요청 없이 worktree를 만들지 않는다.
+- `src/core/game.js`: 렌더러 없는 게임 상태, 시간 진행, 재시작 및 전투 흐름.
+- `src/systems/collision.js`: 3D 선분/AABB 판정. 감지와 총알에 공통 사용.
+- `src/systems/detection.js`: 시야각, 거리, 신체 높이 및 엄폐.
+- `src/rendering`: Three.js 월드, 카메라와 절차적 스프라이트. 실제 PNG 교체는 sprites.js에서 담당.
+- `src/levels`: 지형 데이터. `data`: AI/총기/게임 수치. `src/ui`: UI만 담당.
+- 변경 관련 파일만 읽고 수정한다. 단일 HTML에 로직을 합치지 않는다. 불필요한 파일 재작성/ZIP 생성 금지.
+- 로직 변경은 관련 `node --test --test-name-pattern=...` 우선 실행. 공유 충돌/게임 상태 변경은 `npm test` 전체 실행.
+- 화면/입력 변경은 `npm run build`와 개발 서버 실행 후 `node e2e/smoke.mjs` 검증. Linux 기본 Chromium 경로는 /usr/bin/chromium; 다른 OS는 CHROMIUM_PATH 지정.
+- 테스트의 실패/미실행은 명확하게 보고한다. 게임 규칙을 약화해 테스트를 통과시키지 않는다.
+- 비밀키/생성물/node_modules를 커밋하지 않는다. 변경 파일과 검증 결과를 간결히 보고한다.

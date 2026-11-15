@@ -1,0 +1,12 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {Game,level} from '../src/core/game.js';
+import {visible} from '../src/systems/detection.js';
+import {blocked} from '../src/systems/collision.js';
+const enemy={x:5,z:-3,direction:1,range:20,fov:130};
+test('crouching behind concrete hides body; standing exposes it',()=>{const p={x:7,z:3,crouch:true};assert.equal(visible(enemy,p,level.walls),false);p.crouch=false;assert.equal(visible(enemy,p,level.walls),true);});
+test('gap exposes crouching body; looking away is safe',()=>{const e={...enemy,x:11};const p={x:12,z:3,crouch:true};assert.equal(visible(e,p,level.walls),true);assert.equal(visible({...e,direction:-1},{x:20,z:3,crouch:false},[]),false);});
+test('bullets cannot cross concrete',()=>{assert.equal(blocked({x:5,y:.7,z:3},{x:5,y:.7,z:-3},level.walls),true);assert.equal(blocked({x:5,y:1.65,z:3},{x:5,y:1.65,z:-3},level.walls),false);});
+test('standing shot kills aimed guard, crouching cannot shoot',()=>{const g=new Game();g.player.x=15;g.player.crouch=true;assert.equal(g.shoot({x:15,y:1.3,z:-3}),false);g.player.crouch=false;assert.equal(g.shoot({x:15,y:1.3,z:-3}),true);assert.equal(g.enemies[0].dead,true);assert.equal(g.player.ammo,5);});
+test('exposure includes reaction delay, then lethal attack; restart resets',()=>{const g=new Game();g.player.x=17;g.enemies[0].direction=1;const input={axis:0,crouch:false};g.update(.5,input);assert.equal(g.state,'playing');for(let i=0;i<60;i++)g.update(.05,input);assert.equal(g.state,'dead');g.reset();assert.equal(g.player.dead,false);assert.equal(g.player.x,2);assert.equal(g.player.ammo,6);assert.ok(g.enemies.every(e=>!e.dead&&e.meter===0));});
+test('escape and reload',()=>{const g=new Game();g.player.x=56;g.update(.01,{axis:0,crouch:true});assert.equal(g.state,'clear');g.reset();g.player.ammo=0;g.reload();g.update(1.6,{axis:0,crouch:true});assert.equal(g.player.ammo,6);assert.equal(g.player.reserve,24);});

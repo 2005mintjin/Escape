@@ -1,0 +1,4 @@
+import * as THREE from 'three';
+// Replace generated frames with transparent PNG textures here; retain bottom-center anchors.
+export function makeFrames(color){return Array.from({length:4},(_,frame)=>{const c=document.createElement('canvas');c.width=48;c.height=80;const g=c.getContext('2d');g.fillStyle='#161e20';g.fillRect(17,11,16,15);g.fillStyle=color;g.fillRect(14,8,22,8);g.fillRect(13,27,22,27);g.fillStyle='#b1a48a';g.fillRect(20,18,13,10);g.fillStyle='#20292b';g.fillRect(15,52,8,22-(frame%2)*6);g.fillRect(27,52,8,16+(frame%2)*6);g.fillStyle=color;g.fillRect(29,32,10,9);g.fillStyle='#101718';g.fillRect(32,34,16,5);g.fillStyle='#8b997d';g.fillRect(10,31,6,18);const t=new THREE.CanvasTexture(c);t.magFilter=THREE.NearestFilter;return t;});}
+export function makeSprite(frames){const s=new THREE.Sprite(new THREE.SpriteMaterial({map:frames[0],transparent:true,depthTest:true}));s.center.set(.5,0);s.scale.set(1.2,2.25,1);return s;}

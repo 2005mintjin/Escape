@@ -1,0 +1,21 @@
+import * as THREE from 'three';
+import {level} from '../levels/level01.js';
+import {makeFrames,makeSprite} from './sprites.js';
+export class World{
+ constructor(canvas){this.renderer=new THREE.WebGLRenderer({canvas,antialias:true});this.renderer.setPixelRatio(Math.min(devicePixelRatio,2));this.renderer.setClearColor('#17282b');this.scene=new THREE.Scene();this.scene.fog=new THREE.Fog('#17282b',28,88);this.camera=new THREE.PerspectiveCamera(39,1,.1,150);this.scene.add(new THREE.HemisphereLight(0xb2d5cc,0x34302a,2.5));const sun=new THREE.DirectionalLight(0xf5d6a4,2.5);sun.position.set(-10,20,8);this.scene.add(sun);
+ const box=(x,y,z,w,h,d,color)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshStandardMaterial({color,roughness:.95}));m.position.set(x,y,z);this.scene.add(m);return m;};
+ box(29,-.3,-7,100,.6,65,'#3a4140');box(29,.01,3,64,.04,4,'#555952');box(29,.02,-3,64,.04,4,'#414b49');
+ for(const w of level.walls){box((w.min.x+w.max.x)/2,.625,0,w.max.x-w.min.x,1.25,.9,'#737a70');for(let x=w.min.x+.2;x<w.max.x;x+=2){box(x,1.29,0,1.9,.08,1,'#8d9181');box(x,.55,.46,.035,.8,.015,'#424c46');}}
+ let seed=41;const rand=()=>((seed=(seed*16807)%2147483647)/2147483647);
+ for(let i=0;i<32;i++){const x=i*2.7-12,h=3+rand()*10,z=-13-rand()*16;box(x,h/2,z,2+rand()*4,h,3+rand()*4,'#303d3d');for(let j=1;j<h-1;j+=2)box(x,j,z+2.1,.6,.9,.06,'#111f22');box(x+.8,h+.3,z,.2,1.5,.2,'#56605a');}
+ for(let i=0;i<70;i++)box(rand()*72-5,.1+rand()*.25,-7-rand()*5,.2+rand(),.2+rand()*.5,.4,'#535c54');
+ for(const x of [10.9,25.1,40.1]){box(x,.04,3,1.6,.05,3.8,'#8c784b');}
+ box(56,1.5,2,.16,3,.2,'#7cb7a1');box(57,3,2,2.2,.12,.2,'#7cb7a1');const exit=new THREE.PointLight('#7dfac1',10,8);exit.position.set(56,2,3);this.scene.add(exit);
+ this.frames=makeFrames('#a9b990');this.enemyFrames=makeFrames('#9c7860');this.player=makeSprite(this.frames);this.scene.add(this.player);this.enemies=Array.from({length:3},()=>{const s=makeSprite(this.enemyFrames);this.scene.add(s);return s;});this.lines=new THREE.Group();this.scene.add(this.lines);this.cameraX=2;this.resize();window.addEventListener('resize',()=>this.resize());}
+ resize(){this.renderer.setSize(innerWidth,innerHeight);this.camera.aspect=innerWidth/innerHeight;this.camera.updateProjectionMatrix();}
+ aim(x,y){const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2(x/innerWidth*2-1,1-y/innerHeight*2),this.camera);return ray.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0,0,1),3),new THREE.Vector3());}
+ screen(entity){const p=new THREE.Vector3(entity.x,2.6,entity.z).project(this.camera);return {x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2};}
+ draw(game,dt){this.cameraX+=(game.player.x-this.cameraX)*(1-Math.exp(-dt*5));this.camera.position.set(this.cameraX,10.5,23);this.camera.lookAt(this.cameraX,0,-2);const p=game.player;this.player.position.set(p.x,0,p.z);this.player.scale.set(1.2,p.crouch?1.05:2.25,1);this.player.material.map=this.frames[p.moving?Math.floor(game.time*(p.running?13:7))%4:0];this.player.material.rotation=p.dead?Math.PI/2:0;this.player.material.color.set(p.shot>.17?"#fff0a0":"#ffffff");
+ game.enemies.forEach((e,i)=>{const s=this.enemies[i];s.position.set(e.x,e.dead?.12:0,e.z);s.material.map=this.enemyFrames[e.state==='Patrol'?Math.floor(game.time*6)%4:0];s.material.rotation=e.dead?-Math.PI/2:0;s.material.color.set(e.state==='Alert'||e.state==='Attack'?'#ff9a80':'#ffffff');});
+ while(this.lines.children.length){const l=this.lines.children[0];this.lines.remove(l);l.geometry.dispose();l.material.dispose();}for(const t of game.tracers){const geom=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(t.a.x,t.a.y,t.a.z),new THREE.Vector3(t.b.x,t.b.y,t.b.z)]);this.lines.add(new THREE.Line(geom,new THREE.LineBasicMaterial({color:t.enemy?'#ff654d':'#ffe5a3'})));}this.renderer.render(this.scene,this.camera);}
+}
