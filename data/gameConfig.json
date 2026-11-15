@@ -1,1 +1,19 @@
-{"length":58,"playerZ":3,"enemyZ":-3,"walkSpeed":3.5,"runSpeed":6,"crouchSpeed":1.8,"detectionSeconds":1.3,"reactionSeconds":0.85,"magazine":6,"reserve":30,"reloadSeconds":1.5,"noiseRadius":12}
+{
+  "length": 58,
+  "playerZ": 3,
+  "enemyZ": -3,
+  "walkSpeed": 3.5,
+  "runSpeed": 6,
+  "crouchSpeed": 1.8,
+  "detectionSeconds": 1.3,
+  "reactionSeconds": 0.85,
+  "magazine": 6,
+  "reserve": 30,
+  "reloadSeconds": 1.5,
+  "noiseRadius": 12,
+  "shotCooldown": 3,
+  "radioSeconds": 3,
+  "alertDetectionSeconds": 0.22,
+  "investigateSeconds": 10,
+  "investigateSpeed": 1.8
+}

@@ -2,5 +2,14 @@ import {chromium} from '@playwright/test';
 import assert from 'node:assert/strict';
 const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 const page=await browser.newPage({viewport:{width:1440,height:900}});const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('http://localhost:5173');await page.getByRole('button',{name:'작전 시작'}).click();await page.keyboard.down('KeyS');await page.keyboard.down('KeyD');await page.waitForTimeout(500);await page.keyboard.up('KeyD');await page.keyboard.up('KeyS');await page.keyboard.press('Escape');await page.getByRole('button',{name:'작전 계속하기'}).click();
-for(const size of [{width:1440,height:900},{width:800,height:600}]){await page.setViewportSize(size);const result=await page.evaluate(async()=>{const THREE=await import('/node_modules/.vite/deps/three.js');const {World}=await import('/src/rendering/world.js');const w=new World(document.createElement('canvas'));w.cameraX=15;w.draw({player:{x:15,z:3,crouch:false},enemies:[],tracers:[],time:0},1);const point=new THREE.Vector3(16,1.3,-3);const ndc=point.clone().project(w.camera);const aim=w.aim((ndc.x+1)*innerWidth/2,(1-ndc.y)*innerHeight/2);const error=aim.distanceTo(point);w.renderer.dispose();return error;});assert.ok(result<1e-6,'aim projection matches on resize');}
+for(const size of [{width:1440,height:900},{width:800,height:600}]){await page.setViewportSize(size);const result=await page.evaluate(async()=>{const THREE=await import('/node_modules/.vite/deps/three.js');const {World}=await import('/src/rendering/world.js');const w=new World(document.createElement('canvas'));w.cameraX=15;w.draw({player:{x:15,z:3,crouch:false},enemies:[],tracers:[],time:0},1);const point=new THREE.Vector3(16,1.3,-3);const ndc=point.clone().project(w.camera);const aim=w.aim((ndc.x+1)*innerWidth/2,(1-ndc.y)*innerHeight/2);const error=aim.distanceTo(point);
+const snapshot={state:'playing',player:{x:15,z:3,crouch:false},enemies:[],tracers:[],time:0};
+const before=w.camera.position.clone();w.setPointer(innerWidth,0);w.draw(snapshot,.5);
+if(w.camera.position.x<=before.x||w.camera.position.y<=before.y)throw new Error('mouse pan failed');
+if(w.camera.position.z!==17||w.camera.position.y>6)throw new Error('camera height/zoom failed');
+const near={x:15,z:-3},far={x:100,z:-3};const guards=w.visibleGuards([near,far]);
+if(!guards.includes(near)||guards.includes(far))throw new Error('screen guard selection failed');
+const shifted=point.clone().project(w.camera);const shiftedAim=w.aim((shifted.x+1)*innerWidth/2,(1-shifted.y)*innerHeight/2);
+if(shiftedAim.distanceTo(point)>1e-6)throw new Error('panned aim failed');
+w.renderer.dispose();return error;});assert.ok(result<1e-6,'aim projection matches on resize');}
 await page.setViewportSize({width:1440,height:900});await page.screenshot({path:'/workspace/Escape/e2e/screenshot.png'});assert.deepEqual(errors,[]);await browser.close();console.log('PASS: WebGL startup, movement, crouch, pause/resume, two viewport aiming projections, no runtime errors');
