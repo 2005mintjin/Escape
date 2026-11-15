@@ -10,3 +10,12 @@ export function visible(enemy,player,walls){
  const dot=(dx*enemy.direction*.86+dz*.51)/dist;
  return dist<enemy.range&&(Math.abs(dx)<2||dot>Math.cos(enemy.fov*Math.PI/360))&&!blocked(a,b,walls);
 }
+// Once recognized, the guard retains full detection until death or stage reset.
+export function advanceDetection(enemy,seen,dt,config,lockdown,time){
+ if(enemy.detected||enemy.meter>=1||enemy.witnessUntil>=time){enemy.detected=true;enemy.hasDetectionStarted=true;enemy.meter=1;return false;}
+ if(seen&&!enemy.hasDetectionStarted&&!lockdown){enemy.notice=(enemy.notice||0)+dt;if(enemy.notice<config.suspicionSeconds){enemy.state='Suspicious';return true;}}
+ enemy.meter=Math.max(0,Math.min(1,enemy.meter+(seen?1/(lockdown?config.alertDetectionSeconds:config.detectionSeconds):-.65)*dt));
+ if(enemy.meter>0)enemy.hasDetectionStarted=true;
+ if(enemy.meter>=1)enemy.detected=true;
+ return false;
+}

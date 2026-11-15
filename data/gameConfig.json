@@ -23,5 +23,7 @@
   "staminaSeconds": 4,
   "staminaRegen": 0.85,
   "staminaDelay": 0.8,
-  "staminaRestart": 1
+  "staminaRestart": 1,
+  "suspicionSeconds": 0.55,
+  "enemyShotInterval": 1.1
 }

@@ -5,3 +5,8 @@ export function segmentBox(a,b,box){
  return true;
 }
 export const blocked=(a,b,walls)=>walls.some(w=>segmentBox(a,b,w));
+export function shotImpact(a,b,walls){
+ if(!blocked(a,b,walls))return {point:b,blocked:false};
+ let lo=0,hi=1;for(let i=0;i<18;i++){const t=(lo+hi)/2,q={x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t,z:a.z+(b.z-a.z)*t};if(blocked(a,q,walls))hi=t;else lo=t;}
+ return {point:{x:a.x+(b.x-a.x)*lo,y:a.y+(b.y-a.y)*lo,z:a.z+(b.z-a.z)*lo},blocked:true};
+}
