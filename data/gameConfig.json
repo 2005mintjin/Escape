@@ -19,5 +19,9 @@
   "weaponRange": 10,
   "knifeReach": 1.4,
   "knifeDuration": 0.65,
-  "knifeCooldown": 1.5
+  "knifeCooldown": 1.5,
+  "staminaSeconds": 4,
+  "staminaRegen": 0.85,
+  "staminaDelay": 0.8,
+  "staminaRestart": 1
 }

@@ -5,17 +5,19 @@ import {level} from '../levels/level01.js';
 import {visible,bodyPoint} from '../systems/detection.js';
 import {rally,radioStep,investigate} from '../systems/guardResponse.js';
 import {beginMelee,stepMelee} from '../systems/melee.js';
+import {movePlayer} from '../systems/movement.js';
 import {blocked} from '../systems/collision.js';
 export class Game {
  constructor(){this.reset();}
- reset(){this.player={x:level.start,z:config.playerZ,crouch:false,aiming:false,weapon:'rifle',deathElapsed:0,ammo:config.magazine,reserve:config.reserve,reload:0,shot:0,knifeCooldown:0,melee:null,dead:false};this.enemies=definitions.map(e=>({...e,z:config.enemyZ,state:'Patrol',meter:0,timer:0,idle:0,dead:false,radio:0,corpseTarget:null,searchTime:0}));this.state='playing';this.lockdown=false;this.time=0;this.tracers=[];this.message='낮은 벽 아래로 이동하세요';}
+ reset(){this.player={x:level.start,z:config.playerZ,crouch:false,aiming:false,weapon:'rifle',deathElapsed:0,stamina:config.staminaSeconds,exhausted:false,recoverDelay:0,direction:1,ammo:config.magazine,reserve:config.reserve,reload:0,shot:0,knifeCooldown:0,melee:null,dead:false};this.enemies=definitions.map(e=>({...e,z:config.enemyZ,state:'Patrol',meter:0,timer:0,idle:0,dead:false,radio:0,corpseTarget:null,searchTime:0}));this.state='playing';this.lockdown=false;this.time=0;this.tracers=[];this.message='낮은 벽 아래로 이동하세요';}
  stance(input){this.player.crouch=this.player.melee?false:!!input.crouch;this.player.aiming=!!input.aim;}
  switchWeapon(){if(this.state!=='playing'||this.player.melee)return;this.player.weapon=this.player.weapon==='rifle'?'knife':'rifle';}
- update(dt,input){if(this.state==='dying'){this.player.deathElapsed+=dt;if(this.player.deathElapsed>=1)this.state='dead';return;}if(this.state!=='playing')return;this.time+=dt;const p=this.player;this.stance(input);p.x=Math.max(1,Math.min(config.length-1,p.x+(p.melee?0:input.axis)*(p.aiming?config.crouchSpeed:p.crouch?config.crouchSpeed:input.run?config.runSpeed:config.walkSpeed)*dt));p.moving=!!input.axis;p.running=input.run;p.shot=Math.max(0,p.shot-dt);p.knifeCooldown=Math.max(0,p.knifeCooldown-dt);stepMelee(this,dt,config,level.walls);
+ update(dt,input){if(this.state==='dying'){this.player.deathElapsed+=dt;if(this.player.deathElapsed>=1)this.state='dead';return;}if(this.state!=='playing')return;this.time+=dt;const p=this.player;this.stance(input);movePlayer(p,dt,input,config);p.shot=Math.max(0,p.shot-dt);p.knifeCooldown=Math.max(0,p.knifeCooldown-dt);stepMelee(this,dt,config,level.walls);
  if(p.reload>0){p.reload=Math.max(0,p.reload-dt);if(!p.reload){const n=Math.min(config.magazine-p.ammo,p.reserve);p.ammo+=n;p.reserve-=n;}}
  this.tracers=this.tracers.filter(t=>(t.life-=dt)>0);
- for(const e of this.enemies){if(e.dead)continue;const seen=visible(e,p,level.walls);e.meter=Math.max(0,Math.min(1,e.meter+(seen?1/(this.lockdown?config.alertDetectionSeconds:config.detectionSeconds):-.65)*dt));
- if(e.witnessUntil>=this.time)e.meter=1;
+ for(const e of this.enemies){if(e.dead)continue;const seen=visible(e,p,level.walls);if(seen){e.lastSeenX=p.x;e.alertMemory=2;}else e.alertMemory=Math.max(0,(e.alertMemory||0)-dt);e.meter=Math.max(0,Math.min(1,e.meter+(seen?1/(this.lockdown?config.alertDetectionSeconds:config.detectionSeconds):-.65)*dt));
+ if(e.witnessUntil>=this.time||((e.state==='Alert'||e.state==='Attack')&&e.alertMemory>0))e.meter=1;
+ if(seen&&e.meter>0)e.direction=p.x>=e.x?1:-1;
  if(e.meter>=1){if(e.state!=='Alert'&&e.state!=='Attack'){e.state='Alert';e.timer=config.reactionSeconds;}e.timer-=dt;if(e.timer<=0){e.state='Attack';if(seen&&!blocked({x:e.x,y:1.65,z:e.z},bodyPoint(p),level.walls)){this.tracers.push({a:{x:e.x,y:1.65,z:e.z},b:bodyPoint(p),life:.2,enemy:true});p.dead=true;p.deathElapsed=0;this.state='dying';break;}else{e.state='Suspicious';e.meter=.5;}}}
  else if(radioStep(this,e,dt,{...config,radioSeconds:Math.max(config.radioSeconds,voices.radio.duration)},level.walls)){}else if(investigate(e,dt,config)){}else if(e.meter>0){e.state='Suspicious';}else if(e.idle>0){e.idle-=dt;e.state='Idle';}else{e.state='Patrol';e.x+=e.direction*e.speed*dt;if(e.x>=e.max||e.x<=e.min){e.x=Math.max(e.min,Math.min(e.max,e.x));e.direction*=-1;e.idle=1.5;}}
  }

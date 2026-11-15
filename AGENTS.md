@@ -3,7 +3,8 @@
 - `src/core/game.js`: 렌더러 없는 게임 상태, 시간 진행, 재시작 및 전투 흐름.
 - `src/systems/collision.js`: 3D 선분/AABB 판정. 감지와 총알에 공통 사용.
 - `src/systems/detection.js`: 시야각, 거리, 신체 높이 및 엄폐.
-- `src/rendering`: Three.js 월드, 카메라와 절차적 스프라이트. 실제 PNG 교체는 sprites.js에서 담당.
+- `src/rendering`: Three.js 월드, 카메라와 스프라이트 아틀라스. PNG 로드/UV는 sprites.js, 동작 선택은 animation.js에서 담당. public/sprites 이미지 교체 시 행·열 및 바닥 앵커를 유지한다.
+- `src/systems/movement.js`: 스태미나와 실제 달리기 속도. `src/core/input.js`: S 전용 앉기와 더블탭 입력.
 - `src/levels`: 지형 데이터. `data`: AI/총기/게임 수치. `src/ui`: UI만 담당.
 - 변경 관련 파일만 읽고 수정한다. 단일 HTML에 로직을 합치지 않는다. 불필요한 파일 재작성/ZIP 생성 금지.
 - 로직 변경은 관련 `node --test --test-name-pattern=...` 우선 실행. 공유 충돌/게임 상태 변경은 `npm test` 전체 실행.
