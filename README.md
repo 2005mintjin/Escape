@@ -77,3 +77,15 @@ Git은 초기화되어 있습니다. `git add .` 및 `git commit`으로 기록�
 조작: ◀/▶를 누르고 이동, 달리기를 함께 누르면 스태미나를 사용합니다. 앉기는 눌러 전환하고 유지됩니다. 화면 속 목표를 터치하거나 드래그해 조준한 뒤 공격 버튼을 누릅니다. 공격을 누르는 동안 사격 자세가 적용되며 쿨다운이 끝날 때마다 발사합니다. 앉은 상태에서도 사격할 수 있지만 그동안 몸이 노출됩니다. 총/칼 버튼으로 무기를 전환하고 공격 버튼으로 사용합니다. 재장전과 일시정지도 별도 버튼이 있습니다.
 
 터치 버튼은 HUD 갱신과 분리하여 여러 손가락을 동시에 사용할 수 있습니다. 터치 취소·앱 전환·일시정지 때 입력을 해제해 계속 달리거나 발사하는 현상을 방지합니다. 모바일 렌더링 해상도는 픽셀비 최대 1.25로 제한합니다. `node e2e/mobile.mjs`는 서버 실행 상태에서 Chromium 모바일 에뮬레이션으로 터치 사격/재장전/전환/두 손가락 달리기/터치 취소/가로·세로 버튼 배치를 검증합니다. 실제 Android/iPhone 성능과 Safari 오디오 호환성은 미검증입니다.
+
+## 인터넷 공개: GitHub Pages
+공개 예정 주소: https://2005mintjin.github.io/Escape/ (Pages 배포가 성공한 뒤 이용 가능)
+
+`.github/workflows/pages.yml`은 main 푸시 또는 수동 실행 시 Node.js 24에서 의존성 설치 → 테스트 → 빌드 → Pages 아티팩트 업로드 → 사이트 배포를 수행합니다. 별도 API 키를 저장할 필요 없이 GitHub Actions의 기본 토큰을 사용합니다. Vite의 상대 base와 assetUrl 헬퍼가 `/Escape/` 하위 경로에서도 이미지·음원을 올바르게 찾도록 구성했습니다.
+
+최초 1회 저장소 관리자가 설정합니다:
+1. https://github.com/2005mintjin/Escape/settings/pages 에서 Build and deployment의 Source를 **GitHub Actions**로 선택합니다.
+2. https://github.com/2005mintjin/Escape/actions/workflows/pages.yml 에서 **Run workflow → main → Run workflow**를 실행합니다. Actions 실행이 비활성화되어 있으면 저장소의 Actions를 먼저 활성화합니다.
+3. 배포 작업이 성공하면 위 사이트 주소를 PC/휴대폰 브라우저에서 엽니다. 이후 main 업데이트는 자동 배포됩니다. 비공개 저장소의 Pages 사용 가능 여부는 GitHub 요금제와 조직 정책에 따라 달라집니다.
+
+현재 클라우드에서는 GitHub API와 Pages 도메인에 대한 네트워크 접근이 차단되어 원격 Pages 활성화/실제 공개 URL 응답을 확인하지 못했습니다. 로컬의 배포 빌드를 `/Escape/` 경로로 제공하여 데스크톱/모바일 시작·사격 및 이미지·음원 요청 성공을 검증했습니다. 재검증: `npm run build`, `npm run preview -- --base /Escape/ --port 4173`, 다른 터미널에서 `node e2e/published.mjs`. 실제 배포 후에는 `SITE_URL=https://2005mintjin.github.io/Escape/ node e2e/published.mjs`로 같은 검증을 실행할 수 있습니다(해당 도메인 접근이 허용된 환경 필요).

@@ -1,9 +1,10 @@
+import {assetUrl} from '../core/assets.js';
 import * as THREE from 'three';
 import definitions from '../../data/spriteFrames.json' with {type:'json'};
 export function makeSprite(){const s=new THREE.Sprite(new THREE.SpriteMaterial({transparent:true,alphaTest:.2,depthTest:true}));s.visible=false;return s;}
 export async function loadCharacters(){
  const sources=[...new Set(Object.values(definitions).flat().map(f=>f.source))];
- const images=Object.fromEntries(await Promise.all(sources.map(async source=>{const texture=await new THREE.TextureLoader().loadAsync('/sprites/'+source);texture.colorSpace=THREE.SRGBColorSpace;texture.magFilter=texture.minFilter=THREE.NearestFilter;texture.generateMipmaps=false;return [source,texture];})));
+ const images=Object.fromEntries(await Promise.all(sources.map(async source=>{const texture=await new THREE.TextureLoader().loadAsync(assetUrl('/sprites/'+source));texture.colorSpace=THREE.SRGBColorSpace;texture.magFilter=texture.minFilter=THREE.NearestFilter;texture.generateMipmaps=false;return [source,texture];})));
  const bank=Object.fromEntries(Object.entries(definitions).map(([name,frames])=>[name,frames.map(data=>{
   const source=images[data.source],[x,y,w,h]=data.rect,W=source.image.width,H=source.image.height;
   const map=source.clone();map.repeat.set((w-1)/W,(h-1)/H);map.offset.set((x+.5)/W,1-(y+h-.5)/H);map.needsUpdate=true;

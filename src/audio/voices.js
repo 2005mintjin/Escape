@@ -1,3 +1,4 @@
+import {assetUrl} from '../core/assets.js';
 import clips from '../../data/voices.json' with {type:'json'};
 const keys={Radio:'radio',Alert:'spotted',Investigate:'gunfire',Suspicious:'suspicious'};
 const priority={radio:4,spotted:3,gunfire:2,suspicious:1};
@@ -20,7 +21,7 @@ export class Voices {
   const next=candidates[0],active=[...this.channels.entries()][0];
   if(this.enabled&&next&&(!active||active[0]===next.enemy||priority[next.key]>priority[active[1].key])){
    for(const enemy of this.channels.keys())this.stop(enemy);
-   const audio=this.makeAudio(clips[next.key].url);audio.volume=next.key==='radio'?.65:.45;
+   const audio=this.makeAudio(assetUrl(clips[next.key].url));audio.volume=next.key==='radio'?.65:.45;
    if(next.key==='radio')audio.currentTime=Math.min(next.enemy.radio,.999)*clips.radio.duration;
    this.channels.set(next.enemy,{audio,key:next.key});audio.play().catch(()=>{});
   }
