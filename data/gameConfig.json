@@ -15,5 +15,9 @@
   "radioSeconds": 3,
   "alertDetectionSeconds": 0.22,
   "investigateSeconds": 10,
-  "investigateSpeed": 1.8
+  "investigateSpeed": 1.8,
+  "weaponRange": 10,
+  "knifeReach": 1.4,
+  "knifeDuration": 0.65,
+  "knifeCooldown": 1.5
 }

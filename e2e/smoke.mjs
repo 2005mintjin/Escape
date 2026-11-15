@@ -11,5 +11,12 @@ const near={x:15,z:-3},far={x:100,z:-3};const guards=w.visibleGuards([near,far])
 if(!guards.includes(near)||guards.includes(far))throw new Error('screen guard selection failed');
 const shifted=point.clone().project(w.camera);const shiftedAim=w.aim((shifted.x+1)*innerWidth/2,(1-shifted.y)*innerHeight/2);
 if(shiftedAim.distanceTo(point)>1e-6)throw new Error('panned aim failed');
+if(w.enemies.length!==6)throw new Error('guard sprites missing');
+w.setPointer(innerWidth/2,innerHeight/2);w.pan={x:0,y:0};w.draw(snapshot,0);const still=w.camera.position.clone();w.kick();w.draw(snapshot,.02);
+if(w.camera.position.distanceTo(still)<.001)throw new Error('shot shake missing');w.draw(snapshot,.3);
+if(w.camera.position.distanceTo(still)>1e-6)throw new Error('shake did not settle');
+const {Game}=await import('/src/core/game.js');const meleeGame=new Game();meleeGame.player.x=11.5;meleeGame.enemies[0].x=11.5;
+if(!meleeGame.knife())throw new Error('melee did not start');meleeGame.update(.2,{axis:0,crouch:true});w.draw(meleeGame,.02);
+if(w.player.material.map!==w.knifeFrames[0])throw new Error('knife sprite missing');
 w.renderer.dispose();return error;});assert.ok(result<1e-6,'aim projection matches on resize');}
 await page.setViewportSize({width:1440,height:900});await page.screenshot({path:'/workspace/Escape/e2e/screenshot.png'});assert.deepEqual(errors,[]);await browser.close();console.log('PASS: WebGL startup, movement, crouch, pause/resume, two viewport aiming projections, no runtime errors');
