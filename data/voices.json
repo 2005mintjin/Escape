@@ -1,0 +1,22 @@
+{
+  "radio": {
+    "url": "/audio/radio.mp3",
+    "duration": 3.3175,
+    "source": "무전.mp3"
+  },
+  "suspicious": {
+    "url": "/audio/suspicious.mp3",
+    "duration": 0.522438,
+    "source": "의심.mp3"
+  },
+  "spotted": {
+    "url": "/audio/spotted.mp3",
+    "duration": 1.410563,
+    "source": "적 발견.mp3"
+  },
+  "gunfire": {
+    "url": "/audio/gunfire.mp3",
+    "duration": 2.19425,
+    "source": "총성.mp3"
+  }
+}

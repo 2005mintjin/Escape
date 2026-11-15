@@ -1,5 +1,5 @@
 import {blocked} from './collision.js';
-export const bodyPoint=p=>({x:p.x,y:p.crouch?.65:1.65,z:p.z});
+export const bodyPoint=p=>({x:p.x,y:p.crouch&&!p.aiming?.65:1.65,z:p.z});
 export function visible(enemy,player,walls){
  const a={x:enemy.x,y:1.65,z:enemy.z},b=bodyPoint(player),dx=b.x-a.x,dz=b.z-a.z,dist=Math.hypot(dx,dz);
  // Guards look diagonally along their lane and toward the foreground.

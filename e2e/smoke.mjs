@@ -2,6 +2,10 @@ import {chromium} from '@playwright/test';
 import assert from 'node:assert/strict';
 const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 const page=await browser.newPage({viewport:{width:1440,height:900}});const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('http://localhost:5173');await page.getByRole('button',{name:'작전 시작'}).click();await page.keyboard.down('KeyS');await page.keyboard.down('KeyD');await page.waitForTimeout(500);await page.keyboard.up('KeyD');await page.keyboard.up('KeyS');await page.keyboard.press('Escape');await page.getByRole('button',{name:'작전 계속하기'}).click();
+await page.mouse.wheel(0,100);await page.waitForTimeout(60);await page.getByText('칼 · 클릭으로 기습',{exact:true}).waitFor();await page.mouse.wheel(0,-100);await page.waitForTimeout(60);
+await page.mouse.click(700,350);await page.waitForTimeout(50);assert.equal(await page.locator('footer strong').textContent(),'06');
+await page.keyboard.down('Control');await page.keyboard.down('Shift');await page.mouse.click(700,350);await page.waitForTimeout(50);assert.equal(await page.locator('footer strong').textContent(),'05');await page.keyboard.up('Shift');await page.keyboard.up('Control');
+const audioResult=await page.evaluate(async()=>{const {Voices}=await import('/src/audio/voices.js');const v=new Voices();v.unlock();const enemy={state:'Radio',radio:0,dead:false};const game={state:'playing',enemies:[enemy]};v.update(game);const channel=v.channels.get(enemy);await channel.audio.play();await new Promise(resolve=>setTimeout(resolve,100));if(channel.audio.paused||channel.audio.currentTime<=0)throw new Error('radio playback failed');const duration=channel.audio.duration;enemy.dead=true;v.update(game);if(!channel.audio.paused||channel.audio.currentTime!==0)throw new Error('radio not interrupted');return duration;});assert.ok(Math.abs(audioResult-3.3175)<.1);
 for(const size of [{width:1440,height:900},{width:800,height:600}]){await page.setViewportSize(size);const result=await page.evaluate(async()=>{const THREE=await import('/node_modules/.vite/deps/three.js');const {World}=await import('/src/rendering/world.js');const w=new World(document.createElement('canvas'));w.cameraX=15;w.draw({player:{x:15,z:3,crouch:false},enemies:[],tracers:[],time:0},1);const point=new THREE.Vector3(16,1.3,-3);const ndc=point.clone().project(w.camera);const aim=w.aim((ndc.x+1)*innerWidth/2,(1-ndc.y)*innerHeight/2);const error=aim.distanceTo(point);
 const snapshot={state:'playing',player:{x:15,z:3,crouch:false},enemies:[],tracers:[],time:0};
 const before=w.camera.position.clone();w.setPointer(innerWidth,0);w.draw(snapshot,.5);
@@ -16,7 +20,7 @@ w.setPointer(innerWidth/2,innerHeight/2);w.pan={x:0,y:0};w.draw(snapshot,0);cons
 if(w.camera.position.distanceTo(still)<.001)throw new Error('shot shake missing');w.draw(snapshot,.3);
 if(w.camera.position.distanceTo(still)>1e-6)throw new Error('shake did not settle');
 const {Game}=await import('/src/core/game.js');const meleeGame=new Game();meleeGame.player.x=11.5;meleeGame.enemies[0].x=11.5;
-if(!meleeGame.knife())throw new Error('melee did not start');meleeGame.update(.2,{axis:0,crouch:true});w.draw(meleeGame,.02);
+meleeGame.player.weapon='knife';if(!meleeGame.knife())throw new Error('melee did not start');meleeGame.update(.2,{axis:0,crouch:true});w.draw(meleeGame,.02);
 if(w.player.material.map!==w.knifeFrames[0])throw new Error('knife sprite missing');
 w.renderer.dispose();return error;});assert.ok(result<1e-6,'aim projection matches on resize');}
 await page.setViewportSize({width:1440,height:900});await page.screenshot({path:'/workspace/Escape/e2e/screenshot.png'});assert.deepEqual(errors,[]);await browser.close();console.log('PASS: WebGL startup, movement, crouch, pause/resume, two viewport aiming projections, no runtime errors');
