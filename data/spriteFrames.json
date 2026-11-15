@@ -1,0 +1,618 @@
+{
+  "idle": [
+    {
+      "source": "player.png",
+      "rect": [
+        53,
+        14,
+        165,
+        250
+      ],
+      "anchor": 67,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        309,
+        13,
+        166,
+        251
+      ],
+      "anchor": 67,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        566,
+        13,
+        165,
+        251
+      ],
+      "anchor": 66,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        822,
+        14,
+        164,
+        250
+      ],
+      "anchor": 66,
+      "unit": 0.009
+    }
+  ],
+  "crouch": [
+    {
+      "source": "player.png",
+      "rect": [
+        33,
+        308,
+        200,
+        188
+      ],
+      "anchor": 87,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        291,
+        308,
+        199,
+        188
+      ],
+      "anchor": 85,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        548,
+        308,
+        198,
+        188
+      ],
+      "anchor": 84,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        803,
+        310,
+        198,
+        186
+      ],
+      "anchor": 85,
+      "unit": 0.009
+    }
+  ],
+  "walk": [
+    {
+      "source": "player.png",
+      "rect": [
+        51,
+        519,
+        173,
+        246
+      ],
+      "anchor": 69,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        312,
+        519,
+        169,
+        244
+      ],
+      "anchor": 64,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        566,
+        519,
+        171,
+        244
+      ],
+      "anchor": 66,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        823,
+        521,
+        170,
+        242
+      ],
+      "anchor": 65,
+      "unit": 0.009
+    }
+  ],
+  "run": [
+    {
+      "source": "player.png",
+      "rect": [
+        35,
+        783,
+        216,
+        222
+      ],
+      "anchor": 85,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        308,
+        783,
+        200,
+        223
+      ],
+      "anchor": 68,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        564,
+        782,
+        203,
+        227
+      ],
+      "anchor": 68,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        818,
+        783,
+        204,
+        220
+      ],
+      "anchor": 70,
+      "unit": 0.009
+    }
+  ],
+  "aim": [
+    {
+      "source": "player.png",
+      "rect": [
+        47,
+        1037,
+        191,
+        236
+      ],
+      "anchor": 73,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        304,
+        1036,
+        190,
+        237
+      ],
+      "anchor": 72,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        560,
+        1034,
+        190,
+        239
+      ],
+      "anchor": 72,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        816,
+        1037,
+        191,
+        236
+      ],
+      "anchor": 72,
+      "unit": 0.009
+    }
+  ],
+  "shoot": [
+    {
+      "source": "player.png",
+      "rect": [
+        45,
+        1294,
+        224,
+        234
+      ],
+      "anchor": 75,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        303,
+        1295,
+        188,
+        233
+      ],
+      "anchor": 73,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        555,
+        1296,
+        231,
+        232
+      ],
+      "anchor": 77,
+      "unit": 0.009
+    },
+    {
+      "source": "player.png",
+      "rect": [
+        815,
+        1294,
+        191,
+        234
+      ],
+      "anchor": 73,
+      "unit": 0.009
+    }
+  ],
+  "crouchWalk": [
+    {
+      "source": "player-extra.png",
+      "rect": [
+        105,
+        107,
+        292,
+        267
+      ],
+      "anchor": 117.0,
+      "unit": 0.0063
+    },
+    {
+      "source": "player-extra.png",
+      "rect": [
+        527,
+        106,
+        289,
+        268
+      ],
+      "anchor": 138.5,
+      "unit": 0.0063
+    },
+    {
+      "source": "player-extra.png",
+      "rect": [
+        967,
+        114,
+        294,
+        258
+      ],
+      "anchor": 141.5,
+      "unit": 0.0063
+    },
+    {
+      "source": "player-extra.png",
+      "rect": [
+        1403,
+        112,
+        300,
+        262
+      ],
+      "anchor": 149.0,
+      "unit": 0.0063
+    }
+  ],
+  "death": [
+    {
+      "source": "player-extra.png",
+      "rect": [
+        123,
+        500,
+        266,
+        355
+      ],
+      "anchor": 99.0,
+      "unit": 0.0063
+    },
+    {
+      "source": "player-extra.png",
+      "rect": [
+        545,
+        553,
+        275,
+        289
+      ],
+      "anchor": 120.5,
+      "unit": 0.0063
+    },
+    {
+      "source": "player-extra.png",
+      "rect": [
+        942,
+        618,
+        298,
+        227
+      ],
+      "anchor": 166.5,
+      "unit": 0.0063
+    },
+    {
+      "source": "player-extra.png",
+      "rect": [
+        1371,
+        710,
+        356,
+        131
+      ],
+      "anchor": 181.0,
+      "unit": 0.0063
+    }
+  ],
+  "enemyRight": [
+    {
+      "source": "enemies.png",
+      "rect": [
+        40,
+        21,
+        192,
+        244
+      ],
+      "anchor": 96.0,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        307,
+        22,
+        167,
+        244
+      ],
+      "anchor": 83.5,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        544,
+        22,
+        168,
+        244
+      ],
+      "anchor": 84.0,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        780,
+        22,
+        166,
+        243
+      ],
+      "anchor": 83.0,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        1003,
+        22,
+        174,
+        243
+      ],
+      "anchor": 87.0,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        1249,
+        22,
+        167,
+        242
+      ],
+      "anchor": 83.5,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        1456,
+        22,
+        177,
+        242
+      ],
+      "anchor": 88.5,
+      "unit": 0.009
+    }
+  ],
+  "enemyLeft": [
+    {
+      "source": "enemies.png",
+      "rect": [
+        35,
+        301,
+        193,
+        243
+      ],
+      "anchor": 96.5,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        281,
+        302,
+        170,
+        242
+      ],
+      "anchor": 85.0,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        505,
+        302,
+        168,
+        241
+      ],
+      "anchor": 84.0,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        729,
+        300,
+        164,
+        246
+      ],
+      "anchor": 82.0,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        953,
+        300,
+        176,
+        244
+      ],
+      "anchor": 88.0,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        1190,
+        300,
+        167,
+        240
+      ],
+      "anchor": 83.5,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        1410,
+        299,
+        171,
+        244
+      ],
+      "anchor": 85.5,
+      "unit": 0.009
+    }
+  ],
+  "enemyAction": [
+    {
+      "source": "enemies.png",
+      "rect": [
+        46,
+        574,
+        166,
+        287
+      ],
+      "anchor": 83.0,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        237,
+        577,
+        164,
+        282
+      ],
+      "anchor": 82.0,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        426,
+        575,
+        160,
+        284
+      ],
+      "anchor": 80.0,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        618,
+        577,
+        169,
+        283
+      ],
+      "anchor": 84.5,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        970,
+        579,
+        128,
+        279
+      ],
+      "anchor": 64.0,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        1161,
+        579,
+        129,
+        279
+      ],
+      "anchor": 64.5,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        1349,
+        580,
+        128,
+        278
+      ],
+      "anchor": 64.0,
+      "unit": 0.009
+    },
+    {
+      "source": "enemies.png",
+      "rect": [
+        1539,
+        580,
+        128,
+        278
+      ],
+      "anchor": 64.0,
+      "unit": 0.009
+    }
+  ]
+}

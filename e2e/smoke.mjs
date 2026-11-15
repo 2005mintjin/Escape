@@ -16,9 +16,12 @@ const near={x:15,z:-3},far={x:100,z:-3};const guards=w.visibleGuards([near,far])
 if(!guards.includes(near)||guards.includes(far))throw new Error('screen guard selection failed');
 const shifted=point.clone().project(w.camera);const shiftedAim=w.aim((shifted.x+1)*innerWidth/2,(1-shifted.y)*innerHeight/2);
 if(shiftedAim.distanceTo(point)>1e-6)throw new Error('panned aim failed');
-for(const [name,stance] of Object.entries({idle:{},crouch:{crouch:true},walk:{moving:true},run:{moving:true,running:true},aim:{aiming:true},shoot:{shot:3}})){const actor={x:15,z:3,weapon:'rifle',...stance};w.draw({...snapshot,player:actor},0);if(w.player.userData.animation!==name||w.player.material.map.image.width!==1024)throw new Error('sprite state failed: '+name);}
+for(const [name,stance] of Object.entries({idle:{},crouch:{crouch:true},walk:{moving:true},run:{moving:true,running:true},aim:{aiming:true},shoot:{shot:3},crouchWalk:{crouch:true,moving:true},death:{dead:true,deathElapsed:1}})){const actor={x:15,z:3,weapon:'rifle',...stance};w.draw({...snapshot,player:actor},0);if(w.player.userData.animation!==name||!w.player.material.map.image)throw new Error('sprite state failed: '+name);}
 if(!w.enemies[0].material.map?.image) {const {Game}=await import('/src/core/game.js');w.draw(new Game(),0);}
 if(w.enemies[0].material.map.image.width!==1774)throw new Error('enemy atlas failed');
+const {applyFrame}=await import('/src/rendering/sprites.js');
+for(const frames of Object.values(w.characters.player))for(const frame of frames)for(const flip of [false,true]){applyFrame(w.player,frame,flip);const [, ,width,height]=frame.rect;if(Math.abs(w.player.scale.x/width-w.player.scale.y/height)>1e-9)throw new Error('sprite aspect distortion');const texture=w.player.material.map;if(texture.offset.x+Math.min(0,texture.repeat.x)<0||texture.offset.x+Math.max(0,texture.repeat.x)>1.00001)throw new Error('UV bounds');}
+if(w.scene.children.filter(item=>item.userData.environment).length<300)throw new Error('3D environment missing');
 if(w.enemies.length!==6)throw new Error('guard sprites missing');
 w.setPointer(innerWidth/2,innerHeight/2);w.pan={x:0,y:0};w.draw(snapshot,0);const still=w.camera.position.clone();w.kick();w.draw(snapshot,.02);
 if(w.camera.position.distanceTo(still)<.001)throw new Error('shot shake missing');w.draw(snapshot,.3);
