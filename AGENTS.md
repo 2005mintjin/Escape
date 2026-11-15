@@ -11,4 +11,5 @@
 - 로직 변경은 관련 `node --test --test-name-pattern=...` 우선 실행. 공유 충돌/게임 상태 변경은 `npm test` 전체 실행.
 - 화면/입력 변경은 `npm run build`와 개발 서버 실행 후 `node e2e/smoke.mjs` 검증. Linux 기본 Chromium 경로는 /usr/bin/chromium; 다른 OS는 CHROMIUM_PATH 지정.
 - 테스트의 실패/미실행은 명확하게 보고한다. 게임 규칙을 약화해 테스트를 통과시키지 않는다.
+- `src/ui/touchControls.js`: 별도 고정 DOM의 모바일 입력. HUD innerHTML 안에 넣지 않는다. 포인터 캡처/취소와 멀티터치를 보존하고 변경 시 e2e/mobile.mjs를 실행한다.
 - 비밀키/생성물/node_modules를 커밋하지 않는다. 변경 파일과 검증 결과를 간결히 보고한다.

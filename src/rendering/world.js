@@ -6,7 +6,7 @@ import definitions from '../../data/enemies.json' with {type:'json'};
 import {playerAnimation,animationIndex} from './animation.js';
 import {loadCharacters,makeSprite,applyFrame} from './sprites.js';
 export class World{
- constructor(canvas){this.renderer=new THREE.WebGLRenderer({canvas,antialias:true});this.renderer.setPixelRatio(Math.min(devicePixelRatio,2));this.renderer.setClearColor('#0b121e');this.scene=new THREE.Scene();this.camera=new THREE.PerspectiveCamera(39,1,.1,150);setupNightLighting(this.scene);
+ constructor(canvas){const mobile=matchMedia('(pointer:coarse)').matches;this.renderer=new THREE.WebGLRenderer({canvas,antialias:!mobile});this.renderer.setPixelRatio(Math.min(devicePixelRatio,mobile?1.25:2));this.renderer.setClearColor('#0b121e');this.scene=new THREE.Scene();this.camera=new THREE.PerspectiveCamera(39,1,.1,150);setupNightLighting(this.scene);
  const box=(x,y,z,w,h,d,color)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshStandardMaterial({color,roughness:.95}));m.position.set(x,y,z);this.scene.add(m);return m;};
  box(29,-.3,-7,100,.6,65,'#514a44');
  for(const x of [10.9,25.1,40.1]){box(x,.04,3,1.6,.05,3.8,'#8c784b');}
