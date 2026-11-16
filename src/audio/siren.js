@@ -7,7 +7,7 @@ export class Siren {
  unlock(){if(this.failed&&this.triggered&&!this.finished){this.failed=false;if(this.allowed)this.play();}}
  update(game,hidden=false){
   if(this.player!==game.player)this.reset(game.player);this.allowed=game.state==='playing'&&!hidden;
-  if(['title','dead','dying','clear'].includes(game.state)){if(this.triggered){this.generation++;this.starting=false;this.audio.pause();this.audio.currentTime=0;this.finished=true;}return;}
+  if(['title','dead','dying','extracting','clear'].includes(game.state)){if(this.triggered){this.generation++;this.starting=false;this.audio.pause();this.audio.currentTime=0;this.finished=true;}return;}
   if(hidden||game.state==='paused'){this.generation++;this.starting=false;if(!this.audio.paused)this.audio.pause();return;}
   if(game.state!=='playing')return;
   if(game.lockdown&&!this.triggered)this.triggered=true;

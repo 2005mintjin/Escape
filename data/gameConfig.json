@@ -31,5 +31,7 @@
   "dashCooldown": 2.4,
   "dashDuration": 0.26,
   "rollDuration": 0.26,
-  "dashDistance": 4.2
+  "dashDistance": 4.2,
+  "extractionSeconds": 2.5,
+  "litDetectionMultiplier": 0.5
 }

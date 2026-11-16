@@ -17,3 +17,5 @@
 - `src/ui/pauseControl.js`: PC 일시정지 버튼은 고정 DOM으로 유지한다. HUD innerHTML에 넣지 않는다. PC 입력/버튼 변경 시 배포 preview에서 e2e/desktop.mjs를 실행한다.
 - `src/audio/siren.js`: lockdown 전환 때 스테이지당 한 번 재생하는 사이렌. 무전 도중에는 시작하지 않는다. `melee/meleeCrouch` 프레임과 F 즉시 공격은 e2e/siren-knife.mjs 및 PC/모바일 입력 테스트로 검증한다.
 - 비밀키/생성물/node_modules를 커밋하지 않는다. 변경 파일과 검증 결과를 간결히 보고한다.
+
+- 조명은 stageObjects.js의 lightOff/insideLight와 LIGHT_RADIUS/LIGHT_DEPTH로 판정·표시를 공유한다. 새 오브젝트 효과음은 game.soundEvents에 사건당 한 번 기록하고 Effects가 소비한다. extractionSeconds와 탈출 음원 길이를 맞추며 stage-feedback.test.js 및 e2e/stage-feedback.mjs로 재시작의 실제 함정 높이와 탈출 전환을 검증한다.
