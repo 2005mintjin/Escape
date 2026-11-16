@@ -1,6 +1,7 @@
+import config from '../../data/gameConfig.json' with {type:'json'};
 import {blocked} from './collision.js';
 export const lightOff=light=>light.broken||light.switchedOff;
-export const exitEntry=game=>game.level.exit-1.25;
+export const exitEntry=game=>game.level.exit-.35;
 export const lightsComplete=game=>game.lamps.filter(light=>light.required).every(lightOff);
 export const exitOpen=game=>lightsComplete(game)&&game.panels.filter(panel=>panel.required!==false).every(panel=>panel.active);
 export function stageObjective(game){
@@ -23,11 +24,6 @@ export const LIGHT_RADIUS=3.6,LIGHT_DEPTH=2.2;
 export const insideLight=(lamp,p)=>((p.x-lamp.x)/LIGHT_RADIUS)**2+((p.z-3)/LIGHT_DEPTH)**2<=1;
 export const inLight=game=>(game.lamps||[]).some(lamp=>!lightOff(lamp)&&insideLight(lamp,game.player));
 export function inShadow(game){return !inLight(game)&&game.lamps.some(lamp=>lightOff(lamp)&&Math.abs(lamp.x-game.player.x)<4.5);}
-export function segmentParameter(a,b,point){const d={x:b.x-a.x,y:b.y-a.y,z:b.z-a.z},length=d.x*d.x+d.y*d.y+d.z*d.z;if(!length)return null;const t=((point.x-a.x)*d.x+(point.y-a.y)*d.y+(point.z-a.z)*d.z)/length;if(t<0||t>1.05)return null;const along=Math.min(1,t);return {t:along,x:a.x+d.x*along,y:a.y+d.y*along,z:a.z+d.z*along};}
-export function closestShotTarget(game,a,b){let result=null,best=Infinity;
- for(const enemy of game.enemies){if(enemy.dead)continue;const q=segmentParameter(a,b,{x:enemy.x,y:1.1,z:enemy.z});if(q&&q.t<best&&Math.abs(q.x-enemy.x)<.5&&Math.abs(q.z-enemy.z)<.5&&q.y>.15&&q.y<2.15){result={kind:'enemy',object:enemy,point:{x:enemy.x,y:Math.max(.2,Math.min(2,q.y)),z:enemy.z}};best=q.t;}}
- for(const light of game.lamps){if(lightOff(light))continue;const q=segmentParameter(a,b,light);if(q&&q.t<best&&Math.hypot(q.x-light.x,q.y-light.y,q.z-light.z)<.55){result={kind:'light',object:light,point:{x:light.x,y:light.y,z:light.z}};best=q.t;}}
- return result;
-}
-
-export function updateStageObjects(game){for(const panel of game.panels)if(panel.type!=='lights'&&panel.active&&!panel.resolved&&game.time>=panel.crushAt){panel.resolved=true;game.soundEvents.push({key:'trap'});for(const enemy of game.enemies)if(!enemy.dead&&Math.abs(enemy.x-panel.trapX)<=4.8){enemy.dead=true;enemy.state='Dead';enemy.deathTime=game.time;enemy.crushed=true;}}}
+export const TRAP_SIZE=config.trapSize;
+export const trapBounds=panel=>({min:{x:panel.trapX-TRAP_SIZE.width/2,y:0,z:-3-TRAP_SIZE.depth/2},max:{x:panel.trapX+TRAP_SIZE.width/2,y:TRAP_SIZE.height,z:-3+TRAP_SIZE.depth/2}});
+export function updateStageObjects(game){for(const panel of game.panels)if(panel.type!=='lights'&&panel.active&&!panel.resolved&&game.time>=panel.crushAt){panel.resolved=true;game.soundEvents.push({key:'trap'});const bounds=trapBounds(panel);for(const enemy of game.enemies)if(!enemy.dead&&enemy.x>=bounds.min.x&&enemy.x<=bounds.max.x&&enemy.z>=bounds.min.z&&enemy.z<=bounds.max.z){enemy.dead=true;enemy.state='Dead';enemy.deathTime=game.time;enemy.crushed=true;}}}

@@ -9,7 +9,6 @@ export class Effects {
   if(game.state!=='playing'&&game.state!=='dying'&&game.state!=='extracting'){this.stop();return;}
   for(const event of game.soundEvents||[])if(!this.seen.has(event)){this.seen.add(event);this.play(event.key);}
   if(game.player.reload>0&&this.lastReload===0)this.play('reload');this.lastReload=game.player.reload;
-  for(const tracer of game.tracers)if(tracer.enemy&&!this.seen.has(tracer)){this.seen.add(tracer);this.play('enemy');}
  }
  stop(){for(const sound of this.active){sound.pause();sound.currentTime=0;}this.active.clear();}
 }

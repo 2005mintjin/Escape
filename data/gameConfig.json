@@ -25,7 +25,7 @@
   "staminaDelay": 0.8,
   "staminaRestart": 1,
   "suspicionSeconds": 0.55,
-  "enemyShotInterval": 1.1,
+  "enemyShotInterval": 0.55,
   "playerHealth": 3,
   "dashCost": 1.2,
   "dashCooldown": 2.4,
@@ -33,5 +33,12 @@
   "rollDuration": 0.26,
   "dashDistance": 4.2,
   "extractionSeconds": 2.5,
-  "litDetectionMultiplier": 0.5
+  "playerBulletSpeed": 42,
+  "enemyBulletSpeed": 34,
+  "trapSize": {
+    "width": 3,
+    "height": 1.3,
+    "depth": 1.5
+  },
+  "lightAlertRange": 10
 }

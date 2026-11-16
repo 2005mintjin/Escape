@@ -19,3 +19,6 @@
 - 비밀키/생성물/node_modules를 커밋하지 않는다. 변경 파일과 검증 결과를 간결히 보고한다.
 
 - 조명은 stageObjects.js의 lightOff/insideLight와 LIGHT_RADIUS/LIGHT_DEPTH로 판정·표시를 공유한다. 새 오브젝트 효과음은 game.soundEvents에 사건당 한 번 기록하고 Effects가 소비한다. extractionSeconds와 탈출 음원 길이를 맞추며 stage-feedback.test.js 및 e2e/stage-feedback.mjs로 재시작의 실제 함정 높이와 탈출 전환을 검증한다.
+
+- `systems/projectiles.js`: 양측 탄환 이동과 선분 충돌, `rendering/projectileView.js`: 짧은 탄환 메시 풀. 즉시 사격 피해나 긴 레이저선을 복원하지 않는다. trapSize는 함정 렌더링/충돌의 공통 설정이다. 전투 변경은 projectiles.test.js, e2e/projectiles.mjs 및 전체 캠페인 클리어를 검증한다.
+- extraction 완료는 1·2번 작전에서 자동 nextStage, 마지막 작전에서만 clear를 유지한다. 조명 안에서는 lightAlertRange 내 경비가 즉시 완전 발각하며 실제 탄환은 여전히 벽에 막힌다. 중간 완료 버튼을 다시 요구하지 않는다.
