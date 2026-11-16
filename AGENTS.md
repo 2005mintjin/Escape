@@ -25,4 +25,6 @@
 
 - 진행 중인 무전은 guardResponse.isRadioActive/radioActive로 판정하고 발각 계산 뒤에도 radioStep을 우선 진행한다. 발견 때문에 무전 음원/프레임을 교체하지 않는다. 새 무전 아트는 enemyRadio 프레임, 배경 세부 묘사는 battlefieldDetails.js, 카메라 수치는 gameConfig.camera에서 관리한다. radio-continuity.test.js와 e2e/radio-scene.mjs로 음성 객체 유지와 두 게이지를 검증한다.
 
-- 소음 리볼버 잔탄은 Game.pistolAmmo의 캠페인 자원이다. reset/nextStage에서 보충하지 않고 startCampaign에서만 초기 6발을 지급한다. 발사음은 game.soundEvents로 한 번 기록하며 소음 권총은 rally를 호출하지 않는다. 제어판 원격 작동은 panelBounds와 실제 projectile impact를 사용한다. sidearm.test.js/e2e/sidearm.mjs 및 PC·모바일 무기 교체를 검증한다.
+- 소음 리볼버 잔탄은 Game.pistolAmmo의 캠페인 자원이다. nextStage에서 남은 잔탄을 stagePistolAmmo에 저장하고 reset에서 해당 스테이지 진입 잔탄으로 복원한다. startCampaign만 초기 6발을 지급한다. 발사음은 game.soundEvents로 한 번 기록하며 소음 권총은 rally를 호출하지 않는다. 제어판 원격 작동은 panelBounds와 실제 projectile impact를 사용한다. sidearm.test.js/e2e/sidearm.mjs 및 PC·모바일 무기 교체를 검증한다.
+
+- `src/intro`: 전투와 분리한 집 안 프롤로그. 대사/진행은 story.js와 data/introDialogue.json, 실제 3D 가구는 homeView.js, 타자 음성은 typeVoice.js다. 집에서는 이동/E 상호작용만 허용한다. 사진 표시 최소 2초와 암전 후 전쟁 자동 전환을 유지한다. intro.test.js 및 e2e/intro.mjs/intro-mobile.mjs로 PC·터치 전체 흐름을 검증한다. 전투 회귀 테스트는 사용자에게도 보이는 전쟁 바로 시작 버튼을 사용한다.

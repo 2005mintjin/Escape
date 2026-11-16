@@ -1,0 +1,144 @@
+{
+  "idle": [
+    {
+      "source": "home-cast.png",
+      "rect": [
+        126,
+        27,
+        146,
+        321
+      ],
+      "anchor": 85.5,
+      "unit": 0.0068
+    },
+    {
+      "source": "home-cast.png",
+      "rect": [
+        473,
+        22,
+        147,
+        326
+      ],
+      "anchor": 86.5,
+      "unit": 0.0068
+    }
+  ],
+  "reach": [
+    {
+      "source": "home-cast.png",
+      "rect": [
+        819,
+        30,
+        194,
+        317
+      ],
+      "anchor": 78.5,
+      "unit": 0.0068
+    }
+  ],
+  "hold": [
+    {
+      "source": "home-cast.png",
+      "rect": [
+        1175,
+        28,
+        154,
+        320
+      ],
+      "anchor": 82,
+      "unit": 0.0068
+    }
+  ],
+  "walk": [
+    {
+      "source": "home-cast.png",
+      "rect": [
+        120,
+        381,
+        182,
+        315
+      ],
+      "anchor": 95,
+      "unit": 0.0068
+    },
+    {
+      "source": "home-cast.png",
+      "rect": [
+        483,
+        381,
+        144,
+        315
+      ],
+      "anchor": 77,
+      "unit": 0.0068
+    },
+    {
+      "source": "home-cast.png",
+      "rect": [
+        827,
+        382,
+        184,
+        312
+      ],
+      "anchor": 88,
+      "unit": 0.0068
+    },
+    {
+      "source": "home-cast.png",
+      "rect": [
+        1193,
+        379,
+        134,
+        317
+      ],
+      "anchor": 67,
+      "unit": 0.0068
+    }
+  ],
+  "npc": [
+    {
+      "source": "home-cast.png",
+      "rect": [
+        69,
+        729,
+        254,
+        336
+      ],
+      "anchor": 127,
+      "unit": 0.0057
+    },
+    {
+      "source": "home-cast.png",
+      "rect": [
+        430,
+        728,
+        251,
+        337
+      ],
+      "anchor": 126,
+      "unit": 0.0057
+    },
+    {
+      "source": "home-cast.png",
+      "rect": [
+        788,
+        728,
+        253,
+        337
+      ],
+      "anchor": 127,
+      "unit": 0.0057
+    },
+    {
+      "source": "home-cast.png",
+      "rect": [
+        1150,
+        729,
+        248,
+        336
+      ],
+      "anchor": 125,
+      "unit": 0.0057
+    }
+  ]
+}

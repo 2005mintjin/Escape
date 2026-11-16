@@ -838,37 +838,48 @@
   ],
   "pistolRun": [
     {
-      "source": "player-pistol.png",
+      "source": "pistol-run.png",
       "rect": [
-        376,
-        14,
-        164,
-        322
+        26,
+        97,
+        464,
+        550
       ],
-      "anchor": 87,
-      "unit": 0.007
+      "anchor": 234,
+      "unit": 0.0041
     },
     {
-      "source": "player-pistol.png",
+      "source": "pistol-run.png",
       "rect": [
-        986,
-        21,
-        198,
-        316
+        626,
+        97,
+        373,
+        550
       ],
-      "anchor": 109,
-      "unit": 0.007
+      "anchor": 177,
+      "unit": 0.0041
     },
     {
-      "source": "player-pistol.png",
+      "source": "pistol-run.png",
       "rect": [
-        689,
-        17,
-        183,
-        320
+        1104,
+        97,
+        459,
+        550
       ],
-      "anchor": 90,
-      "unit": 0.007
+      "anchor": 242,
+      "unit": 0.0041
+    },
+    {
+      "source": "pistol-run.png",
+      "rect": [
+        1689,
+        97,
+        374,
+        550
+      ],
+      "anchor": 200,
+      "unit": 0.0041
     }
   ],
   "pistolCrouch": [
