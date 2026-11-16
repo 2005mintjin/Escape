@@ -1,0 +1,380 @@
+{
+  "squadWoman": [
+    {
+      "source": "/intro/squad-cutscene.png",
+      "rect": [
+        145,
+        12,
+        279,
+        480
+      ],
+      "anchor": 110,
+      "unit": 0.0048
+    }
+  ],
+  "womanCaptive": [
+    {
+      "source": "/intro/squad-cutscene.png",
+      "rect": [
+        621,
+        116,
+        239,
+        366
+      ],
+      "anchor": 144,
+      "unit": 0.0048
+    }
+  ],
+  "womanRun": [
+    {
+      "source": "/intro/squad-cutscene.png",
+      "rect": [
+        1066,
+        13,
+        386,
+        479
+      ],
+      "anchor": 224,
+      "unit": 0.0048
+    }
+  ],
+  "squadMan": [
+    {
+      "source": "/intro/squad-cutscene.png",
+      "rect": [
+        140,
+        513,
+        285,
+        500
+      ],
+      "anchor": 110,
+      "unit": 0.00465
+    }
+  ],
+  "manCaptive": [
+    {
+      "source": "/intro/squad-cutscene.png",
+      "rect": [
+        604,
+        619,
+        255,
+        385
+      ],
+      "anchor": 166,
+      "unit": 0.00465
+    }
+  ],
+  "manRun": [
+    {
+      "source": "/intro/squad-cutscene.png",
+      "rect": [
+        1037,
+        520,
+        408,
+        493
+      ],
+      "anchor": 253,
+      "unit": 0.00465
+    }
+  ],
+  "mariaSurrender": [
+    {
+      "source": "/intro/maria-captive.png",
+      "rect": [
+        281,
+        84,
+        342,
+        749
+      ],
+      "anchor": 209,
+      "unit": 0.0031
+    }
+  ],
+  "mariaCaptive": [
+    {
+      "source": "/intro/maria-captive.png",
+      "rect": [
+        1065,
+        287,
+        383,
+        535
+      ],
+      "anchor": 260,
+      "unit": 0.0031
+    }
+  ],
+  "mariaIdle": [
+    {
+      "source": "/sprites/player.png",
+      "rect": [
+        53,
+        14,
+        165,
+        250
+      ],
+      "anchor": 67,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/player.png",
+      "rect": [
+        309,
+        13,
+        166,
+        251
+      ],
+      "anchor": 67,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/player.png",
+      "rect": [
+        566,
+        13,
+        165,
+        251
+      ],
+      "anchor": 66,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/player.png",
+      "rect": [
+        822,
+        14,
+        164,
+        250
+      ],
+      "anchor": 66,
+      "unit": 0.009
+    }
+  ],
+  "mariaRun": [
+    {
+      "source": "/sprites/player.png",
+      "rect": [
+        35,
+        783,
+        216,
+        222
+      ],
+      "anchor": 85,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/player.png",
+      "rect": [
+        308,
+        783,
+        200,
+        223
+      ],
+      "anchor": 68,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/player.png",
+      "rect": [
+        564,
+        782,
+        203,
+        227
+      ],
+      "anchor": 68,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/player.png",
+      "rect": [
+        818,
+        783,
+        204,
+        220
+      ],
+      "anchor": 70,
+      "unit": 0.009
+    }
+  ],
+  "guard": [
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        40,
+        21,
+        192,
+        244
+      ],
+      "anchor": 96.0,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        307,
+        22,
+        167,
+        244
+      ],
+      "anchor": 83.5,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        544,
+        22,
+        168,
+        244
+      ],
+      "anchor": 84.0,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        780,
+        22,
+        166,
+        243
+      ],
+      "anchor": 83.0,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        1003,
+        22,
+        174,
+        243
+      ],
+      "anchor": 87.0,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        1249,
+        22,
+        167,
+        242
+      ],
+      "anchor": 83.5,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        1456,
+        22,
+        177,
+        242
+      ],
+      "anchor": 88.5,
+      "unit": 0.009
+    }
+  ],
+  "guardAction": [
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        46,
+        574,
+        166,
+        287
+      ],
+      "anchor": 83.0,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        237,
+        577,
+        164,
+        282
+      ],
+      "anchor": 82.0,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        426,
+        575,
+        160,
+        284
+      ],
+      "anchor": 80.0,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        618,
+        577,
+        169,
+        283
+      ],
+      "anchor": 84.5,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        970,
+        579,
+        128,
+        279
+      ],
+      "anchor": 64.0,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        1161,
+        579,
+        129,
+        279
+      ],
+      "anchor": 64.5,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        1349,
+        580,
+        128,
+        278
+      ],
+      "anchor": 64.0,
+      "unit": 0.009
+    },
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        1539,
+        580,
+        128,
+        278
+      ],
+      "anchor": 64.0,
+      "unit": 0.009
+    }
+  ],
+  "guardHold": [
+    {
+      "source": "/sprites/enemies.png",
+      "rect": [
+        46,
+        574,
+        166,
+        287
+      ],
+      "anchor": 83.0,
+      "unit": 0.009
+    }
+  ]
+}

@@ -27,3 +27,8 @@ body.intro-title #menu{padding:0;backdrop-filter:none}
 #menu .title-panel{max-width:min(760px,92vw)}
 #menu .title-panel h1{word-break:keep-all}
 .brand{font-size:20px}@media(max-width:600px){.brand{font-size:18px}}
+.war-cinematic{position:absolute;inset:0;z-index:6;border-top:6vh solid #050607;border-bottom:6vh solid #050607;pointer-events:none}
+.war-caption{position:absolute;bottom:2vh;left:50%;transform:translateX(-50%);width:min(820px,90vw);padding:14px 20px;background:#080b0de8;border-left:2px solid #a58e68;text-align:center}
+.war-caption b{font-size:12px;color:#c9ad7e;letter-spacing:2px}.war-caption p{margin:6px 0 0;color:#eee7da;font-size:17px;line-height:1.7}
+.war-scene .home-heading{background:none;border:0;box-shadow:none;justify-content:end}.war-scene .home-heading>b,.war-scene .home-objective,.war-scene .home-help,.war-scene .home-prompt{display:none}
+@media(pointer:coarse){.war-caption{padding:8px 12px}.war-caption b{font-size:10px}.war-caption p{font-size:13px}.war-cinematic{border-top-width:4vh;border-bottom-width:4vh}}

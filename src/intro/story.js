@@ -1,9 +1,10 @@
+import {WAR_DURATION} from './warSequence.js';
 import cards from '../../data/introCards.json' with {type:'json'};
 import dialogue from '../../data/introDialogue.json' with {type:'json'};
 export const HOME={length:26,npcX:18.3,drawerX:8.3,photoX:8.85,startX:12.2};
 export class IntroStory{
- constructor(){this.active=false;this.completed=false;this.x=HOME.startX;this.direction=1;this.moving=false;this.time=0;this.drawerOpen=0;this.photoFall=0;this.hasTie=false;this.photoHeld=false;this.mode='home';this.cardElapsed=0;this.transitionSerial=0;this.phase='meet';this.paused=false;this.lines=[];this.lineIndex=0;this.typed=0;this.typeElapsed=0;this.letterTicks=0;this.photoElapsed=0;this.fadeElapsed=0;}
- start(){Object.assign(this,new IntroStory());this.active=true;this.mode='opening';this.transitionSerial=1;}
+ constructor(){this.active=false;this.completed=false;this.x=HOME.startX;this.direction=1;this.moving=false;this.time=0;this.drawerOpen=0;this.photoFall=0;this.hasTie=false;this.photoHeld=false;this.mode='home';this.cardElapsed=0;this.cutsceneElapsed=0;this.transitionSerial=0;this.phase='meet';this.paused=false;this.lines=[];this.lineIndex=0;this.typed=0;this.typeElapsed=0;this.letterTicks=0;this.photoElapsed=0;this.fadeElapsed=0;}
+ start(){Object.assign(this,new IntroStory());this.active=true;this.mode='opening';this.transitionSerial=0;}
  get line(){return this.lines[this.lineIndex]||null;}
  get text(){return this.line?Array.from(this.line.text).slice(0,this.typed).join(''):'';}
  get target(){if(Math.abs(this.x-HOME.npcX)<1.6&&this.phase!=='memory')return 'npc';if(this.phase==='fetch'&&Math.abs(this.x-HOME.drawerX)<1.5)return 'drawer';if(this.phase==='fallen'&&Math.abs(this.x-HOME.photoX)<1.5)return 'photo';return null;}
@@ -23,8 +24,9 @@ export class IntroStory{
   if(this.mode==='action'){this.actionElapsed+=dt;this.drawerOpen=Math.min(1,this.actionElapsed/.55);this.photoFall=Math.max(0,Math.min(1,(this.actionElapsed-.35)/.85));if(this.actionElapsed>=1.25){this.hasTie=true;this.openDialogue('drawer');}}
   if(this.mode==='photo')this.photoElapsed+=dt;
   if(this.mode==='dialogue'||this.mode==='photo'&&this.photoElapsed>=2){this.typeElapsed+=dt;this.reveal(Math.floor(this.typeElapsed/.045));}
+  if(this.mode==='cutscene'){this.cutsceneElapsed+=dt;if(this.cutsceneElapsed>=WAR_DURATION){this.active=false;this.completed=true;}}
   if(this.mode==='fade'){this.fadeElapsed+=dt;if(this.fadeElapsed>=1.4){this.mode='warcard';this.cardElapsed=0;}}
-  else if(this.mode==='opening'||this.mode==='warcard'){this.cardElapsed+=dt;if(this.cardElapsed>=cards.duration){if(this.mode==='opening')this.mode='home';else{this.active=false;this.completed=true;}}}
+  else if(this.mode==='opening'||this.mode==='warcard'){this.cardElapsed+=dt;if(this.cardElapsed>=cards.duration){if(this.mode==='opening')this.mode='home';else{this.mode='cutscene';this.cutsceneElapsed=0;}}}
  }
  togglePause(){if(this.active)this.paused=!this.paused;}
 }

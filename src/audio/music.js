@@ -5,6 +5,6 @@ export class Music {
  toggle(){this.enabled=!this.enabled;if(this.enabled)this.unlock();else this.sync();}
  update(state,hidden=false,scene=null){this.state=state;this.hidden=hidden;this.scene=scene;this.sync();}
  track(audio,volume){audio.volume=volume;if(volume<=0){if(!audio.paused)audio.pause();this.requests.delete(audio);return;}if(audio.paused&&!this.requests.has(audio)&&!this.failedTracks.has(audio)){this.requests.set(audio,true);Promise.resolve(audio.play()).catch(error=>{if(error?.name!=='AbortError'){this.failedTracks.add(audio);this.failed=true;}});}}
- sync(){const allowed=this.enabled&&this.unlocked&&!this.hidden,home=this.state==='intro'&&this.scene&&!this.scene.paused&&!['opening','fade','warcard'].includes(this.scene.mode);const homeFade=this.scene?.photoHeld?Math.max(0,1-this.scene.photoElapsed/2):1;const combat=['playing','paused','dying','dead','clear','extracting'].includes(this.state);
+ sync(){const allowed=this.enabled&&this.unlocked&&!this.hidden,home=this.state==='intro'&&this.scene&&!this.scene.paused&&!['opening','fade','warcard','cutscene'].includes(this.scene.mode);const homeFade=this.scene?.photoHeld?Math.max(0,1-this.scene.photoElapsed/2):1;const combat=['playing','paused','dying','dead','clear','extracting'].includes(this.state);
  this.track(this.audio,allowed&&combat?(this.state==='playing'?.22:.11):0);this.track(this.homeAudio,allowed&&home?.2*homeFade:0);}
 }
