@@ -1,5 +1,4 @@
 import config from '../../data/gameConfig.json' with {type:'json'};
-import voices from '../../data/voices.json' with {type:'json'};
 import definitions from '../../data/enemies.json' with {type:'json'};
 import {level} from '../levels/level01.js';
 import {visible,bodyPoint,advanceDetection} from '../systems/detection.js';
@@ -8,8 +7,8 @@ import {beginMelee,stepMelee} from '../systems/melee.js';
 import {movePlayer} from '../systems/movement.js';
 import {blocked} from '../systems/collision.js';
 export class Game {
- constructor(){this.reset();}
- reset(){this.player={x:level.start,z:config.playerZ,crouch:false,aiming:false,weapon:'rifle',deathElapsed:0,health:config.playerHealth,hurt:0,stamina:config.staminaSeconds,exhausted:false,recoverDelay:0,direction:1,ammo:config.magazine,reserve:config.reserve,reload:0,shot:0,knifeCooldown:0,melee:null,dead:false};this.enemies=definitions.map(e=>({...e,z:config.enemyZ,state:'Patrol',meter:0,detected:false,hasDetectionStarted:false,charging:false,notice:0,timer:0,idle:0,dead:false,radio:0,corpseTarget:null,searchTime:0}));this.state='playing';this.lockdown=false;this.time=0;this.tracers=[];this.message='낮은 벽 아래로 이동하세요';}
+ constructor(random=Math.random){this.random=random;this.reset();}
+ reset(){this.player={x:level.start,z:config.playerZ,crouch:false,aiming:false,weapon:'rifle',deathElapsed:0,health:config.playerHealth,hurt:0,stamina:config.staminaSeconds,exhausted:false,recoverDelay:0,direction:1,ammo:config.magazine,reserve:config.reserve,reload:0,shot:0,knifeCooldown:0,melee:null,dead:false};this.enemies=definitions.map(e=>({...e,z:config.enemyZ,state:'Patrol',meter:0,detected:false,hasDetectionStarted:false,charging:false,notice:0,timer:0,idle:0,dead:false,radio:0,radioClip:null,corpseTarget:null,searchTime:0}));this.state='playing';this.lockdown=false;this.time=0;this.tracers=[];this.message='낮은 벽 아래로 이동하세요';}
  damagePlayer(){if(this.state!=='playing')return;const p=this.player;p.health=Math.max(0,p.health-1);p.hurt=.3;if(!p.health){p.dead=true;p.deathElapsed=0;this.state='dying';}}
  stance(input){this.player.crouch=this.player.melee?false:!!input.crouch;this.player.aiming=!!input.aim;}
  switchWeapon(){if(this.state!=='playing'||this.player.melee)return;this.player.weapon=this.player.weapon==='rifle'?'knife':'rifle';}
@@ -28,7 +27,7 @@ export class Game {
    }
   }
  }
- else if(radioStep(this,e,dt,{...config,radioSeconds:Math.max(config.radioSeconds,voices.radio.duration)},level.walls)){}else if(investigate(e,dt,config)){}else if(e.meter>0){e.state='Suspicious';}else if(e.idle>0){e.idle-=dt;e.state='Idle';}else{e.state='Patrol';e.x+=e.direction*e.speed*dt;if(e.x>=e.max||e.x<=e.min){e.x=Math.max(e.min,Math.min(e.max,e.x));e.direction*=-1;e.idle=1.5;}}
+ else if(radioStep(this,e,dt,config,level.walls)){}else if(investigate(e,dt,config)){}else if(e.meter>0){e.state='Suspicious';}else if(e.idle>0){e.idle-=dt;e.state='Idle';}else{e.state='Patrol';e.x+=e.direction*e.speed*dt;if(e.x>=e.max||e.x<=e.min){e.x=Math.max(e.min,Math.min(e.max,e.x));e.direction*=-1;e.idle=1.5;}}
  }
  if(p.x>=level.exit&&!p.dead)this.state='clear';}
  knife(){if(this.player.weapon!=='knife')return false;return beginMelee(this,config,level.walls);}

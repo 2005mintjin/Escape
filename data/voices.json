@@ -2,21 +2,79 @@
   "radio": {
     "url": "/audio/radio.mp3",
     "duration": 3.3175,
-    "source": "무전.mp3"
+    "source": "무전.mp3",
+    "variants": [
+      {
+        "url": "/audio/radio.mp3",
+        "duration": 3.3175,
+        "source": "무전.mp3"
+      },
+      {
+        "url": "/audio/radio-2.mp3",
+        "duration": 2.768938,
+        "source": "무전2.mp3"
+      }
+    ]
   },
   "suspicious": {
     "url": "/audio/suspicious.mp3",
     "duration": 0.522438,
-    "source": "의심.mp3"
+    "source": "의심.mp3",
+    "variants": [
+      {
+        "url": "/audio/suspicious.mp3",
+        "duration": 0.522438,
+        "source": "의심.mp3"
+      },
+      {
+        "url": "/audio/suspicious-2.mp3",
+        "duration": 1.488938,
+        "source": "의심2.mp3"
+      },
+      {
+        "url": "/audio/suspicious-3.mp3",
+        "duration": 1.149375,
+        "source": "의심3.mp3"
+      }
+    ]
   },
   "spotted": {
     "url": "/audio/spotted.mp3",
     "duration": 1.410563,
-    "source": "적 발견.mp3"
+    "source": "적 발견.mp3",
+    "variants": [
+      {
+        "url": "/audio/spotted.mp3",
+        "duration": 1.410563,
+        "source": "적 발견.mp3"
+      },
+      {
+        "url": "/audio/spotted-2.mp3",
+        "duration": 1.071,
+        "source": "적 발견2.mp3"
+      },
+      {
+        "url": "/audio/spotted-3.mp3",
+        "duration": 1.410563,
+        "source": "적 발견3.mp3"
+      }
+    ]
   },
   "gunfire": {
     "url": "/audio/gunfire.mp3",
     "duration": 2.19425,
-    "source": "총성.mp3"
+    "source": "총성.mp3",
+    "variants": [
+      {
+        "url": "/audio/gunfire.mp3",
+        "duration": 2.19425,
+        "source": "총성.mp3"
+      },
+      {
+        "url": "/audio/gunfire-2.mp3",
+        "duration": 1.880813,
+        "source": "총성2.mp3"
+      }
+    ]
   }
 }

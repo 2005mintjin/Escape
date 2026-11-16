@@ -1,3 +1,4 @@
+import {pickVoice} from '../audio/voiceCatalog.js';
 import {visible} from './detection.js';
 // Investigation targets are snapshots of the noise location, never hidden-player tracking.
 export function rally(enemies,onscreen,x,duration){
@@ -7,7 +8,8 @@ export function radioStep(game,e,dt,config,walls){
  if(game.lockdown)return false;
  if(!e.corpseTarget)e.corpseTarget=game.enemies.find(body=>body.dead&&!body.reported&&visible(e,{...body,crouch:true},walls));
  if(!e.corpseTarget)return false;
- e.state='Radio';e.radio=Math.min(1,e.radio+dt/config.radioSeconds);
+ e.radioClip??=pickVoice('radio',game.random);
+ e.state='Radio';e.radio=Math.min(1,e.radio+dt/(e.radioClip.duration||config.radioSeconds));
  if(e.radio>=1){e.corpseTarget.reported=true;game.lockdown=true;game.message='무전 완료 · 전원 경계태세! 발각 속도 증가';}
  return true;
 }
