@@ -37,3 +37,5 @@
 - warAudio.js의 폭발은 cinematic-explosion.mp3를 정상 속도로 개별 채널에서 재생하여 잔향을 보존한다. runAudio.js는 실제 playing+moving+running 조건에서만 달리기 녹음을 반복한다. 정지/일시정지/탭 이탈과 자동재생 재시도를 보존하고 run-audio.test.js/e2e/run-audio.mjs를 검증한다. 비네팅은 world와 HUD 사이의 pointer-events:none 오버레이이며 집/타이틀에서는 숨긴다.
 
 - 컷신 시간은 introDelta로 실제 RAF 경과 시간을 사용한다(최대 1초). 게임 물리용 50ms 제한을 컷신에 적용하여 녹음과 시각 효과의 시간이 늘어나지 않도록 한다. 집 이동과 전투 물리의 제한은 유지한다.
+
+- 서랍 앞판은 열고 닫을 때 동일한 고정 스프라이트/기준점을 사용하고, 열린 내부 테두리만 추가한다. drawer-aligned.png와 homeFurniture.json을 수정할 때 e2e/cutscene.mjs에서 앞판 월드 위치/크기 불변을 검증한다. 적 사망은 enemyAnimation.js/EnemyDeathClock과 enemyDeath/guardDeath 6프레임을 사용한다. 사망 때 스프라이트 전체를 회전시키지 말고, 마지막 누운 프레임을 유지하며 재시작 기록을 초기화한다. enemy-fall.test.js/e2e/enemy-fall.mjs로 검증한다.

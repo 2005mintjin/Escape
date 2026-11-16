@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {enemyDeathFrame} from '../rendering/enemyAnimation.js';
 import {assetUrl} from '../core/assets.js';
 import {makeSprite,applyFrame} from '../rendering/sprites.js';
 import definitions from '../../data/cutsceneFrames.json' with {type:'json'};
@@ -19,7 +20,7 @@ export class WarView{
  this.pose(this.maria,shot.id==='surrounded'?'mariaIdle':prisoner?'mariaCaptive':'mariaRun',travel,2,t);
  this.pose(this.woman,prisoner?'womanCaptive':escape?'womanRun':'squadWoman',-1.8+travel*.86,1.4,t);this.pose(this.man,prisoner?'manCaptive':escape?'manRun':'squadMan',1.8+travel*.92,.9,t);
  if(escape){this.woman.position.y=Math.abs(Math.sin(t*12))*.045;this.man.position.y=Math.abs(Math.sin(t*12+1.5))*.045;}
- this.weapons.forEach(m=>m.visible=prisoner);this.guards.forEach((g,i)=>{const right=i>1,x=(right?1:-1)*4.9+(i%2)*.9;this.pose(g,'guardAim',x,-.3+(i%2)*.6,0,right);if(t>12.8&&i===0){g.material.rotation=-1.3;g.position.y=-.45;}if(t>14.1&&i===3){g.material.rotation=1.3;g.position.y=-.45;}});
+ this.weapons.forEach(m=>m.visible=prisoner);this.guards.forEach((g,i)=>{const right=i>1,x=(right?1:-1)*4.9+(i%2)*.9;const fallAt=i===0?12.8:i===3?14.1:Infinity;if(t>=fallAt){const frames=this.bank.guardDeath;applyFrame(g,frames[enemyDeathFrame(t-fallAt,frames.length)],right);g.position.set(x,0,-.3+(i%2)*.6);g.material.rotation=0;g.userData.animation='death';tintCharacter(g.material,x+12,false,.8);}else this.pose(g,'guardAim',x,-.3+(i%2)*.6,0,right);});
  let flash=0;for(const impact of [11.15,12.8,14.1])flash=Math.max(flash,Math.max(0,1-(t-impact)*4)*(t>=impact?1:0));this.blastLight.intensity=flash*60;this.debris.forEach((m,i)=>{const age=Math.max(0,Math.min(1.7,t-11.15));m.visible=t>=11.15;m.position.set(-4+Math.sin(i*2.4)*age*3.6,Math.max(.07,.2+age*(3+i%3)-age*age*3.5),Math.cos(i*2.4)*age);m.rotation.set(age*6,i+age*4,age*8);});const cloud=t>=11.15?Math.min(1,(t-11.15)/2)*Math.max(0,1-(t-15)/7):0;this.dust.forEach((m,i)=>{m.material.opacity=cloud*.42;m.scale.setScalar(1+Math.max(0,t-11.15)*.15);m.position.y=.5+(i%4)*.5+Math.max(0,t-11.15)*.05;});this.shell.visible=t>=10.7&&t<11.15;if(this.shell.visible)this.shell.position.set(-7+(t-10.7)*7,6-(t-10.7)*13,0);
  const aspect=innerWidth/innerHeight,half=Math.max(4.3,7/aspect);this.camera.left=-half*aspect;this.camera.right=half*aspect;this.camera.top=half;this.camera.bottom=-half;this.camera.updateProjectionMatrix();const track=escape?travel*.55:0,shake=flash*.16;this.camera.position.set(track+Math.sin(t*71)*shake,3.4+Math.cos(t*83)*shake,17);this.camera.lookAt(track,1.4,0);this.camera.updateMatrixWorld();this.renderer.render(this.scene,this.camera);this.scene.userData.shot=shot.id;
  }

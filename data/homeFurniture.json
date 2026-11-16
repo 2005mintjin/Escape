@@ -88,19 +88,21 @@
     ]
   },
   "drawer": {
+    "source": "drawer-aligned.png",
     "rect": [
-      1108,
-      839,
-      319,
-      157
+      1165,
+      184,
+      888,
+      110
     ]
   },
   "drawerClosed": {
+    "source": "drawer-aligned.png",
     "rect": [
-      1125,
-      925,
+      112,
       275,
-      76
+      862,
+      267
     ]
   }
 }

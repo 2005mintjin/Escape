@@ -217,3 +217,11 @@ Git은 초기화되어 있습니다. `git add .` 및 `git commit`으로 기록�
 - 컷신 탈출과 실제 전투의 달리기에 같은 달리기 녹음을 사용합니다. `src/audio/runAudio.js`는 실제 이동하며 달리는 동안만 하나의 반복 채널을 재생합니다. 걷기/앉기/정지/사망/일시정지/탭 이탈 때 즉시 멈추며, 자동재생이 차단되면 다음 사용자 입력에서 재시도합니다.
 - `src/ui/cinematic.js` / `cinematic.css`: 전투 화면의 모서리에만 은은한 비네팅을 적용합니다. HUD와 조준/터치 입력을 가리지 않으며 집·메인 메뉴에서는 숨깁니다. 무거운 후처리 라이브러리는 사용하지 않습니다.
 - 검증: `tests/run-audio.test.js`, `e2e/run-audio.mjs`, `e2e/cutscene.mjs`, 전체 인트로와 PC·터치 회귀 테스트.
+
+
+## 서랍 정렬과 적 쓰러짐
+- 서랍은 `public/intro/drawer-aligned.png`의 수평 앞판을 열린 상태에서도 그대로 유지하고, 내부 테두리만 뒤에 표시합니다. 두 상태의 앞판 위치/크기/기준점을 바꾸거나 회전시키지 않습니다. 영역은 `data/homeFurniture.json`에서 관리합니다.
+- `public/sprites/enemy-death.png`의 6프레임은 전투와 컷신이 공통으로 사용합니다. 전투는 `data/spriteFrames.json`의 enemyDeath, 컷신은 `data/cutsceneFrames.json`의 guardDeath로 높이에 맞는 동일 비율을 적용합니다.
+- `src/rendering/enemyAnimation.js`는 약 0.9초 동안 한 번 쓰러진 뒤 최종 시체 프레임을 유지합니다. 전투는 게임 시간으로 일시정지에 대응하며, 새 적 객체가 생기는 재시작 때 기록도 새로 시작합니다. 컷신은 포격 시점을 기준으로 같은 프레임 선택 함수를 사용합니다. 살아 있는 스프라이트를 옆으로 돌리는 방식은 사용하지 않습니다.
+- 전쟁 진입 자막은 **194x년 3월, 노브그라드**입니다. `data/introCards.json`에서 수정합니다.
+- 검증: `tests/enemy-fall.test.js`, `e2e/enemy-fall.mjs`, `e2e/cutscene.mjs`와 PC/모바일 전체 인트로 흐름.

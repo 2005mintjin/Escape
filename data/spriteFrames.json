@@ -1025,5 +1025,73 @@
       "anchor": 104,
       "unit": 0.007
     }
+  ],
+  "enemyDeath": [
+    {
+      "source": "enemy-death.png",
+      "rect": [
+        104,
+        44,
+        331,
+        447
+      ],
+      "anchor": 148,
+      "unit": 0.0059860788863109055
+    },
+    {
+      "source": "enemy-death.png",
+      "rect": [
+        575,
+        62,
+        333,
+        429
+      ],
+      "anchor": 180,
+      "unit": 0.0059860788863109055
+    },
+    {
+      "source": "enemy-death.png",
+      "rect": [
+        1111,
+        114,
+        329,
+        377
+      ],
+      "anchor": 139,
+      "unit": 0.0059860788863109055
+    },
+    {
+      "source": "enemy-death.png",
+      "rect": [
+        46,
+        651,
+        380,
+        288
+      ],
+      "anchor": 94,
+      "unit": 0.0059860788863109055
+    },
+    {
+      "source": "enemy-death.png",
+      "rect": [
+        500,
+        725,
+        464,
+        212
+      ],
+      "anchor": 50,
+      "unit": 0.0059860788863109055
+    },
+    {
+      "source": "enemy-death.png",
+      "rect": [
+        1026,
+        761,
+        478,
+        178
+      ],
+      "anchor": 44,
+      "unit": 0.0059860788863109055
+    }
   ]
 }
