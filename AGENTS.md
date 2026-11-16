@@ -24,3 +24,5 @@
 - extraction 완료는 1·2번 작전에서 자동 nextStage, 마지막 작전에서만 clear를 유지한다. 조명 안에서는 lightAlertRange 내 경비가 즉시 완전 발각하며 실제 탄환은 여전히 벽에 막힌다. 중간 완료 버튼을 다시 요구하지 않는다.
 
 - 진행 중인 무전은 guardResponse.isRadioActive/radioActive로 판정하고 발각 계산 뒤에도 radioStep을 우선 진행한다. 발견 때문에 무전 음원/프레임을 교체하지 않는다. 새 무전 아트는 enemyRadio 프레임, 배경 세부 묘사는 battlefieldDetails.js, 카메라 수치는 gameConfig.camera에서 관리한다. radio-continuity.test.js와 e2e/radio-scene.mjs로 음성 객체 유지와 두 게이지를 검증한다.
+
+- 소음 리볼버 잔탄은 Game.pistolAmmo의 캠페인 자원이다. reset/nextStage에서 보충하지 않고 startCampaign에서만 초기 6발을 지급한다. 발사음은 game.soundEvents로 한 번 기록하며 소음 권총은 rally를 호출하지 않는다. 제어판 원격 작동은 panelBounds와 실제 projectile impact를 사용한다. sidearm.test.js/e2e/sidearm.mjs 및 PC·모바일 무기 교체를 검증한다.

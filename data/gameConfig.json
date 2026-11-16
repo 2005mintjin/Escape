@@ -47,5 +47,11 @@
     "fov": 36,
     "lookHeight": 1.3,
     "lookDepth": -0.5
+  },
+  "pistol": {
+    "rounds": 6,
+    "cooldown": 1.2,
+    "range": 10,
+    "speed": 42
   }
 }

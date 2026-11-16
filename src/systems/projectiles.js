@@ -1,5 +1,5 @@
 import {segmentBoxEntry} from './collision.js';
-import {lightOff} from './stageObjects.js';
+import {lightOff,activatePanel,panelBounds} from './stageObjects.js';
 export function fireProjectile(game,origin,target,{enemy=false,speed,range}){
  const length=Math.hypot(target.x-origin.x,target.y-origin.y,target.z-origin.z);if(length<1e-6)return false;
  const direction={x:(target.x-origin.x)/length,y:(target.y-origin.y)/length,z:(target.z-origin.z)/length};
@@ -16,11 +16,13 @@ export function updateProjectiles(game,dt){
   if(bullet.enemy)consider(bodyBox(game.player,true),'player');
   else{
    for(const enemy of game.enemies)if(!enemy.dead)consider(bodyBox(enemy),'enemy',enemy);
+   for(const panel of game.panels)consider(panelBounds(panel),'panel',panel);
    for(const lamp of game.lamps)if(!lightOff(lamp))consider({min:{x:lamp.x-.4,y:lamp.y-.3,z:lamp.z-.4},max:{x:lamp.x+.4,y:lamp.y+.3,z:lamp.z+.4}},'light',lamp);
   }
   if(hit){
    if(hit.kind==='player')game.damagePlayer();
    if(hit.kind==='enemy'){hit.object.dead=true;hit.object.state='Dead';hit.object.deathTime=game.time;}
+   if(hit.kind==='panel')activatePanel(game,hit.object);
    if(hit.kind==='light'){hit.object.broken=true;game.soundEvents.push({key:'light'});game.message='감시등 파괴 · 어둠 속 발견 속도 감소';}
   }else{bullet.position=b;bullet.remaining-=distance;if(bullet.remaining>1e-6)active.push(bullet);}
   if(game.player.dead){game.projectiles=[];return;}

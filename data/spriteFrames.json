@@ -798,5 +798,221 @@
       "anchor": 140,
       "unit": 0.00405
     }
+  ],
+  "pistolIdle": [
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        63,
+        14,
+        152,
+        322
+      ],
+      "anchor": 85,
+      "unit": 0.007
+    }
+  ],
+  "pistolWalk": [
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        376,
+        14,
+        164,
+        322
+      ],
+      "anchor": 87,
+      "unit": 0.007
+    },
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        689,
+        17,
+        183,
+        320
+      ],
+      "anchor": 90,
+      "unit": 0.007
+    }
+  ],
+  "pistolRun": [
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        376,
+        14,
+        164,
+        322
+      ],
+      "anchor": 87,
+      "unit": 0.007
+    },
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        986,
+        21,
+        198,
+        316
+      ],
+      "anchor": 109,
+      "unit": 0.007
+    },
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        689,
+        17,
+        183,
+        320
+      ],
+      "anchor": 90,
+      "unit": 0.007
+    }
+  ],
+  "pistolCrouch": [
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        41,
+        386,
+        192,
+        223
+      ],
+      "anchor": 107,
+      "unit": 0.007
+    },
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        987,
+        387,
+        196,
+        222
+      ],
+      "anchor": 108,
+      "unit": 0.007
+    }
+  ],
+  "pistolCrouchWalk": [
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        353,
+        385,
+        197,
+        226
+      ],
+      "anchor": 110,
+      "unit": 0.007
+    },
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        667,
+        386,
+        199,
+        225
+      ],
+      "anchor": 112,
+      "unit": 0.007
+    }
+  ],
+  "pistolAim": [
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        58,
+        646,
+        213,
+        318
+      ],
+      "anchor": 90,
+      "unit": 0.007
+    },
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        373,
+        646,
+        212,
+        318
+      ],
+      "anchor": 90,
+      "unit": 0.007
+    }
+  ],
+  "pistolShoot": [
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        690,
+        646,
+        235,
+        318
+      ],
+      "anchor": 89,
+      "unit": 0.007
+    },
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        1005,
+        646,
+        209,
+        318
+      ],
+      "anchor": 90,
+      "unit": 0.007
+    }
+  ],
+  "pistolCrouchAim": [
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        38,
+        1015,
+        241,
+        206
+      ],
+      "anchor": 110,
+      "unit": 0.007
+    },
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        356,
+        1015,
+        233,
+        207
+      ],
+      "anchor": 107,
+      "unit": 0.007
+    }
+  ],
+  "pistolCrouchShoot": [
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        670,
+        1015,
+        254,
+        208
+      ],
+      "anchor": 109,
+      "unit": 0.007
+    },
+    {
+      "source": "player-pistol.png",
+      "rect": [
+        991,
+        1015,
+        230,
+        206
+      ],
+      "anchor": 104,
+      "unit": 0.007
+    }
   ]
 }

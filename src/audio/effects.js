@@ -1,5 +1,5 @@
 import {assetUrl} from '../core/assets.js';
-const files={player:'/audio/player-shot.mp3',enemy:'/audio/enemy-shot.mp3',reload:'/audio/reload.mp3',escape:'/audio/escape-steps.mp3',panel:'/audio/panel-hit.mp3',light:'/audio/light-break.mp3',trap:'/audio/trap-impact.mp3'};
+const files={pistol:'/audio/suppressed-revolver.mp3',knifeSwing:'/audio/knife-swing.mp3',knifeKill:'/audio/knife-kill.mp3',player:'/audio/player-shot.mp3',enemy:'/audio/enemy-shot.mp3',reload:'/audio/reload.mp3',escape:'/audio/escape-steps.mp3',panel:'/audio/panel-hit.mp3',light:'/audio/light-break.mp3',trap:'/audio/trap-impact.mp3'};
 export class Effects {
  constructor(makeAudio=url=>new Audio(url)){this.makeAudio=makeAudio;this.active=new Set();this.seen=new WeakSet();this.player=null;this.lastReload=0;this.lastState=null;}
  play(key){const sound=this.makeAudio(assetUrl(files[key]));sound.volume=key==='reload'?.55:.65;this.active.add(sound);sound.onended=()=>this.active.delete(sound);sound.play().catch(()=>this.active.delete(sound));return sound;}

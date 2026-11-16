@@ -37,3 +37,5 @@ kbd{color:#d4ba91;background:#211a12;border-color:#6c5234;box-shadow:inset 0 0 0
 @media(pointer:coarse){.goal{font-size:8px;margin-top:5px;padding-top:5px;line-height:1.5}.dash-readiness{font-size:8px;margin:4px 0}#touch-controls [data-action=dash]{min-width:48px}.touch-actions{gap:5px}}
 
 .extraction-blackout{position:fixed;inset:0;background:#000;z-index:100;pointer-events:all}
+
+.weapon-name{display:block;font-size:9px;font-style:normal;color:#d0ae76;letter-spacing:1px;margin-bottom:3px}.panel-shot-target{font-size:23px;line-height:1;color:#ffdd93}@media(pointer:coarse){#touch-weapon{position:absolute;top:88px;right:8px;min-height:34px!important;min-width:130px;font-size:10px!important;padding:6px 9px!important}.weapon-name{font-size:8px;margin-bottom:2px}}

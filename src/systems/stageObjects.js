@@ -7,9 +7,10 @@ export const exitOpen=game=>lightsComplete(game)&&game.panels.filter(panel=>pane
 export function stageObjective(game){
  const lightTotal=game.lamps.filter(l=>l.required).length,lightDone=game.lamps.filter(l=>l.required&&lightOff(l)).length;
  if(!lightsComplete(game))return `감시등 차단 ${lightDone} / ${lightTotal} · 사격 / 조명 제어판 F`;
- const panel=game.panels.find(p=>p.required!==false&&!p.active);if(panel)return `제어판 ${panel.x}m · 틈에서 F / 칼 버튼`;
+ const panel=game.panels.find(p=>p.required!==false&&!p.active);if(panel)return `제어판 ${panel.x}m · F / 칼 또는 사격`;
  return '출구 개방 · 문 또는 터널로 이동';
 }
+export const panelBounds=panel=>({min:{x:panel.x-.4,y:panel.y-.3,z:panel.z+.07},max:{x:panel.x+.4,y:panel.y+.3,z:panel.z+.25}});
 export function nearbyPanel(game,reach){const p=game.player;return game.panels.find(panel=>!panel.active&&Math.abs(panel.x-p.x)<=reach&&!blocked({x:p.x,y:.7,z:p.z},{x:panel.x,y:.7,z:panel.z},game.level.walls));}
 export function activatePanel(game,panel){
  game.soundEvents.push({key:'panel'});
