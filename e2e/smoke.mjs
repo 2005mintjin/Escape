@@ -11,7 +11,7 @@ for(const size of [{width:1440,height:900},{width:800,height:600}]){await page.s
 const snapshot={state:'playing',player:{x:15,z:3,crouch:false},enemies:[],tracers:[],time:0};
 const before=w.camera.position.clone();w.setPointer(innerWidth,0);w.draw(snapshot,.5);
 if(w.camera.position.x<=before.x||w.camera.position.y<=before.y)throw new Error('mouse pan failed');
-if(w.camera.position.z!==17||w.camera.position.y>6)throw new Error('camera height/zoom failed');
+if(w.camera.position.z!==14.5||w.camera.position.y>3.7)throw new Error('camera height/zoom failed');
 const near={x:15,z:-3},far={x:100,z:-3};const guards=w.visibleGuards([near,far]);
 if(!guards.includes(near)||guards.includes(far))throw new Error('screen guard selection failed');
 const shifted=point.clone().project(w.camera);const shiftedAim=w.aim((shifted.x+1)*innerWidth/2,(1-shifted.y)*innerHeight/2);

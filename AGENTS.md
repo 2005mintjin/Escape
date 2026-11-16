@@ -22,3 +22,5 @@
 
 - `systems/projectiles.js`: 양측 탄환 이동과 선분 충돌, `rendering/projectileView.js`: 짧은 탄환 메시 풀. 즉시 사격 피해나 긴 레이저선을 복원하지 않는다. trapSize는 함정 렌더링/충돌의 공통 설정이다. 전투 변경은 projectiles.test.js, e2e/projectiles.mjs 및 전체 캠페인 클리어를 검증한다.
 - extraction 완료는 1·2번 작전에서 자동 nextStage, 마지막 작전에서만 clear를 유지한다. 조명 안에서는 lightAlertRange 내 경비가 즉시 완전 발각하며 실제 탄환은 여전히 벽에 막힌다. 중간 완료 버튼을 다시 요구하지 않는다.
+
+- 진행 중인 무전은 guardResponse.isRadioActive/radioActive로 판정하고 발각 계산 뒤에도 radioStep을 우선 진행한다. 발견 때문에 무전 음원/프레임을 교체하지 않는다. 새 무전 아트는 enemyRadio 프레임, 배경 세부 묘사는 battlefieldDetails.js, 카메라 수치는 gameConfig.camera에서 관리한다. radio-continuity.test.js와 e2e/radio-scene.mjs로 음성 객체 유지와 두 게이지를 검증한다.

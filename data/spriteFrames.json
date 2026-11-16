@@ -752,5 +752,51 @@
       "anchor": 194.5,
       "unit": 0.0045
     }
+  ],
+  "enemyRadio": [
+    {
+      "source": "enemy-radio.png",
+      "rect": [
+        129,
+        100,
+        288,
+        543
+      ],
+      "anchor": 140,
+      "unit": 0.00405
+    },
+    {
+      "source": "enemy-radio.png",
+      "rect": [
+        672,
+        100,
+        288,
+        543
+      ],
+      "anchor": 140,
+      "unit": 0.00405
+    },
+    {
+      "source": "enemy-radio.png",
+      "rect": [
+        1215,
+        100,
+        288,
+        543
+      ],
+      "anchor": 140,
+      "unit": 0.00405
+    },
+    {
+      "source": "enemy-radio.png",
+      "rect": [
+        1758,
+        100,
+        288,
+        543
+      ],
+      "anchor": 140,
+      "unit": 0.00405
+    }
   ]
 }
