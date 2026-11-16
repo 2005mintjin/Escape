@@ -1,8 +1,9 @@
+import {startBattle} from './helpers/start.mjs';
 import {chromium,expect} from '@playwright/test';
 import assert from 'node:assert/strict';
 const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 try{
- const context=await browser.newContext({viewport:{width:844,height:390},isMobile:true,hasTouch:true,deviceScaleFactor:1});const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('http://localhost:5173');await page.getByRole('button',{name:'전쟁 스테이지 바로 시작'}).tap();
+ const context=await browser.newContext({viewport:{width:844,height:390},isMobile:true,hasTouch:true,deviceScaleFactor:1});const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('http://localhost:5173');await startBattle(page);
  const root=page.locator('#touch-controls');await expect(root).toBeVisible();
  await page.getByRole('button',{name:'앉기 전환'}).tap();
  // Direct touch aims without firing. Separate attack button enters the held aim stance.

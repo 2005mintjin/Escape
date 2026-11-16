@@ -1,3 +1,4 @@
+import {startBattle} from './helpers/start.mjs';
 import {chromium,expect} from '@playwright/test';
 import assert from 'node:assert/strict';
 const url=process.env.SITE_URL||'http://127.0.0.1:4173/Escape/';
@@ -5,7 +6,7 @@ const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'
 try{for(const mobile of [false,true]){
  const context=await browser.newContext({viewport:mobile?{width:844,height:390}:{width:1280,height:800},isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});const page=await context.newPage();const errors=[],failed=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400&&!r.url().endsWith('favicon.ico'))failed.push(r.url());});
- await page.goto(url);await page.waitForLoadState('networkidle');await page.getByRole('button',{name:'전쟁 스테이지 바로 시작'}).click();await expect(page.locator('#menu section')).toHaveCount(0,{timeout:15000});await expect(page.getByRole('meter',{name:'체력'})).toHaveAttribute('aria-valuenow','3');
+ await page.goto(url);await page.waitForLoadState('networkidle');await startBattle(page);await expect(page.locator('#menu section')).toHaveCount(0,{timeout:15000});await expect(page.getByRole('meter',{name:'체력'})).toHaveAttribute('aria-valuenow','3');
  if(mobile){await page.getByRole('button',{name:'앉기 전환'}).tap();await page.getByRole('button',{name:'공격',exact:true}).tap();}
  else{await page.keyboard.down('KeyS');await page.keyboard.down('Shift');await page.mouse.click(650,300);await page.keyboard.up('Shift');}
  await expect(page.locator('footer strong')).toHaveText('05',{timeout:20000});

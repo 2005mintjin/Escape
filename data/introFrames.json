@@ -51,48 +51,48 @@
   ],
   "walk": [
     {
-      "source": "home-cast.png",
+      "source": "home-walk-calm.png",
       "rect": [
-        120,
-        381,
-        182,
-        315
+        130,
+        38,
+        336,
+        628
       ],
-      "anchor": 95,
-      "unit": 0.0068
+      "anchor": 170,
+      "unit": 0.00355
     },
     {
-      "source": "home-cast.png",
+      "source": "home-walk-calm.png",
       "rect": [
-        483,
-        381,
-        144,
-        315
+        673,
+        38,
+        336,
+        628
       ],
-      "anchor": 77,
-      "unit": 0.0068
+      "anchor": 177,
+      "unit": 0.00355
     },
     {
-      "source": "home-cast.png",
+      "source": "home-walk-calm.png",
       "rect": [
-        827,
-        382,
-        184,
-        312
+        1216,
+        38,
+        336,
+        628
       ],
-      "anchor": 88,
-      "unit": 0.0068
+      "anchor": 179,
+      "unit": 0.00355
     },
     {
-      "source": "home-cast.png",
+      "source": "home-walk-calm.png",
       "rect": [
-        1193,
-        379,
-        134,
-        317
+        1759,
+        38,
+        336,
+        628
       ],
-      "anchor": 67,
-      "unit": 0.0068
+      "anchor": 181,
+      "unit": 0.00355
     }
   ],
   "npc": [

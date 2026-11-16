@@ -1,0 +1,1 @@
+export async function startBattle(page){await page.getByRole('button',{name:'플레이',exact:true}).click();await page.locator('#intro-ui').waitFor({state:'visible'});await page.keyboard.press('Escape');await page.getByRole('button',{name:'전쟁 스테이지 바로 시작',exact:true}).click();}

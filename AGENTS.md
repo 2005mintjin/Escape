@@ -13,7 +13,7 @@
 - 화면/입력 변경은 `npm run build`와 개발 서버 실행 후 `node e2e/smoke.mjs` 검증. Linux 기본 Chromium 경로는 /usr/bin/chromium; 다른 OS는 CHROMIUM_PATH 지정.
 - 테스트의 실패/미실행은 명확하게 보고한다. 게임 규칙을 약화해 테스트를 통과시키지 않는다.
 - `src/ui/touchControls.js`: 별도 고정 DOM의 모바일 입력. HUD innerHTML 안에 넣지 않는다. 포인터 캡처/취소와 멀티터치를 보존하고 변경 시 e2e/mobile.mjs를 실행한다.
-- `src/ui/theme.css`: 검정/갈색/황동 UI 테마. 기본 배치 style.css와 분리한다. `src/audio/music.js`: 단일 반복 BGM 및 브라우저 자동재생 대응. 변경 시 music.test.js와 e2e/theme-music.mjs 검증.
+- `src/ui/theme.css`: 검정/갈색/황동 UI 테마. 기본 배치 style.css와 분리한다. `src/audio/music.js`: 집/전투 전용 반복 BGM 및 브라우저 자동재생 대응. 변경 시 music.test.js와 e2e/theme-music.mjs 검증.
 - `src/ui/pauseControl.js`: PC 일시정지 버튼은 고정 DOM으로 유지한다. HUD innerHTML에 넣지 않는다. PC 입력/버튼 변경 시 배포 preview에서 e2e/desktop.mjs를 실행한다.
 - `src/audio/siren.js`: lockdown 전환 때 스테이지당 한 번 재생하는 사이렌. 무전 도중에는 시작하지 않는다. `melee/meleeCrouch` 프레임과 F 즉시 공격은 e2e/siren-knife.mjs 및 PC/모바일 입력 테스트로 검증한다.
 - 비밀키/생성물/node_modules를 커밋하지 않는다. 변경 파일과 검증 결과를 간결히 보고한다.
@@ -27,4 +27,6 @@
 
 - 소음 리볼버 잔탄은 Game.pistolAmmo의 캠페인 자원이다. nextStage에서 남은 잔탄을 stagePistolAmmo에 저장하고 reset에서 해당 스테이지 진입 잔탄으로 복원한다. startCampaign만 초기 6발을 지급한다. 발사음은 game.soundEvents로 한 번 기록하며 소음 권총은 rally를 호출하지 않는다. 제어판 원격 작동은 panelBounds와 실제 projectile impact를 사용한다. sidearm.test.js/e2e/sidearm.mjs 및 PC·모바일 무기 교체를 검증한다.
 
-- `src/intro`: 전투와 분리한 집 안 프롤로그. 대사/진행은 story.js와 data/introDialogue.json, 실제 3D 가구는 homeView.js, 타자 음성은 typeVoice.js다. 집에서는 이동/E 상호작용만 허용한다. 사진 표시 최소 2초와 암전 후 전쟁 자동 전환을 유지한다. intro.test.js 및 e2e/intro.mjs/intro-mobile.mjs로 PC·터치 전체 흐름을 검증한다. 전투 회귀 테스트는 사용자에게도 보이는 전쟁 바로 시작 버튼을 사용한다.
+- `src/intro`: 전투와 분리한 집 안 프롤로그. 대사/진행은 story.js와 data/introDialogue.json, 실제 3D 가구는 homeView.js, 타자 음성은 typeVoice.js다. 집에서는 이동/E 상호작용만 허용한다. 사진 표시 최소 2초와 암전 후 전쟁 자동 전환을 유지한다. intro.test.js 및 e2e/intro.mjs/intro-mobile.mjs로 PC·터치 전체 흐름을 검증한다. 전투 회귀 테스트는 프롤로그 일시정지 메뉴에 있는 전쟁 바로 시작 버튼을 사용한다.
+
+- 프롤로그 시공간 문구/노출 시간은 data/introCards.json에서 관리한다. 집 음악은 사진을 든 뒤 2초 페이드로 정지하며 이후 다시 시작하지 않는다. sceneAudio.js는 암전 효과음을 전환당 한 번, 전쟁터 환경음을 실제 playing 상태에서만 재생한다. 관련 intro/music/scene-audio 단위 테스트와 e2e/intro.mjs의 실제 음원 상태를 검증한다. 메인 메뉴는 일러스트/타이틀/플레이만 유지한다.

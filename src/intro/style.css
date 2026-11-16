@@ -9,3 +9,21 @@ body.in-prologue #hud,body.in-prologue #crosshair,body.in-prologue #pause,body.i
 
 #intro-ui:has(.home-dialogue:not([hidden])) .home-help{opacity:0}
 body.in-prologue #world,body.intro-title #world{cursor:default}
+body.intro-title #world,body.intro-title #music-toggle{display:none!important}
+#menu .title-illustration{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+body.intro-title #menu{background:linear-gradient(90deg,#08090bd9,transparent 78%);isolation:isolate}
+#menu .title-panel{position:relative;width:min(680px,92vw);margin-right:auto;margin-left:7vw;padding:24px;text-align:left;background:none;border:0;box-shadow:none}
+#menu .title-panel:before,#menu .title-panel:after{display:none}
+#menu .title-panel h1{font-size:clamp(36px,5.3vw,82px);letter-spacing:.08em;line-height:1.4;margin:14px 0 44px;color:#f1dfbd;text-shadow:0 4px 22px #000}
+.title-eyebrow{letter-spacing:.5em;font-size:12px;color:#c0ab88}
+#menu .title-panel button{width:220px;max-width:80vw;margin:0;padding:15px;font-size:19px}
+.chapter-card{position:absolute;inset:0;display:grid;place-items:center;background:#000;z-index:10;padding:30px;pointer-events:none}
+.chapter-card p{text-align:center;font-size:clamp(22px,3vw,42px);line-height:1.9;letter-spacing:.06em;max-width:1100px;color:#f1e7d7}
+.home-pause{z-index:12}.home-pause section{display:flex;flex-direction:column;gap:14px}
+.home-heading button{position:relative;z-index:11}
+@media(max-width:600px){#menu .title-illustration{object-position:66% center}#menu .title-panel{margin-left:3vw;padding:16px}#menu .title-panel h1{font-size:40px}.title-eyebrow{font-size:10px}#menu .title-panel button{width:180px}}
+@media(pointer:coarse) and (orientation:portrait){.home-heading button{position:absolute}}
+body.intro-title #menu{padding:0;backdrop-filter:none}
+#menu .title-panel{max-width:min(760px,92vw)}
+#menu .title-panel h1{word-break:keep-all}
+.brand{font-size:20px}@media(max-width:600px){.brand{font-size:18px}}
