@@ -27,8 +27,13 @@
 
 - 소음 리볼버 잔탄은 Game.pistolAmmo의 캠페인 자원이다. nextStage에서 남은 잔탄을 stagePistolAmmo에 저장하고 reset에서 해당 스테이지 진입 잔탄으로 복원한다. startCampaign만 초기 6발을 지급한다. 발사음은 game.soundEvents로 한 번 기록하며 소음 권총은 rally를 호출하지 않는다. 제어판 원격 작동은 panelBounds와 실제 projectile impact를 사용한다. sidearm.test.js/e2e/sidearm.mjs 및 PC·모바일 무기 교체를 검증한다.
 
-- `src/intro`: 전투와 분리한 집 안 프롤로그. 대사/진행은 story.js와 data/introDialogue.json, 실제 3D 가구는 homeView.js, 타자 음성은 typeVoice.js다. 집에서는 이동/E 상호작용만 허용한다. 사진 표시 최소 2초와 암전 후 전쟁 자동 전환을 유지한다. intro.test.js 및 e2e/intro.mjs/intro-mobile.mjs로 PC·터치 전체 흐름을 검증한다. 전투 회귀 테스트는 프롤로그 일시정지 메뉴에 있는 전쟁 바로 시작 버튼을 사용한다.
+- `src/intro`: 전투와 분리한 집 안 프롤로그. 대사/진행은 story.js와 data/introDialogue.json, 3D 방 외곽은 homeView.js, 가구 스프라이트는 homeFurniture.js, 타자 음성은 typeVoice.js다. 집에서는 이동/E 상호작용만 허용한다. 사진 표시 최소 2초와 암전 후 전쟁 자동 전환을 유지한다. intro.test.js 및 e2e/intro.mjs/intro-mobile.mjs로 PC·터치 전체 흐름을 검증한다. 전투 회귀 테스트는 프롤로그 일시정지 메뉴에 있는 전쟁 바로 시작 버튼을 사용한다.
 
 - 프롤로그 시공간 문구/노출 시간은 data/introCards.json에서 관리한다. 집 음악은 사진을 든 뒤 2초 페이드로 정지하며 이후 다시 시작하지 않는다. sceneAudio.js는 암전 효과음을 전환당 한 번, 전쟁터 환경음을 실제 playing 상태에서만 재생한다. 관련 intro/music/scene-audio 단위 테스트와 e2e/intro.mjs의 실제 음원 상태를 검증한다. 메인 메뉴는 일러스트/타이틀/플레이만 유지한다.
 
 - 집 진입은 transitionSerial=0으로 무음이다. 회상 암전에서만 serial을 증가시킨다. 전쟁 회상은 warSequence.js/warView.js/warAudio.js와 cutsceneFrames.json으로 분리한다. 타임라인은 일시정지/탭 이탈 때 정지하며 종료 전에는 전투 AI를 진행하지 않는다. 변경 시 cutscene.test.js 및 PC·터치 전체 인트로 흐름을 검증한다. 정지 조준은 animationIndex의 고정 프레임을 유지하되 사격/근접/사망 우선순위를 보존한다.
+
+- 집 가구는 furniture.png/homeFurniture.json의 개별 빌보드로 유지한다. 임의의 세로 압축이나 3D 가구를 복원하지 않는다. 서랍 닫힘/열림과 기존 사진 상호작용을 함께 검증한다. 컷신 배경은 buildEnvironment/setupNightLighting을 재사용한다. 컷신 마리아 도입/적 조준은 단일 정지 프레임이며 인물 높이를 약 2.25m로 맞춘다.
+- warAudio.js의 폭발은 cinematic-explosion.mp3를 정상 속도로 개별 채널에서 재생하여 잔향을 보존한다. runAudio.js는 실제 playing+moving+running 조건에서만 달리기 녹음을 반복한다. 정지/일시정지/탭 이탈과 자동재생 재시도를 보존하고 run-audio.test.js/e2e/run-audio.mjs를 검증한다. 비네팅은 world와 HUD 사이의 pointer-events:none 오버레이이며 집/타이틀에서는 숨긴다.
+
+- 컷신 시간은 introDelta로 실제 RAF 경과 시간을 사용한다(최대 1초). 게임 물리용 50ms 제한을 컷신에 적용하여 녹음과 시각 효과의 시간이 늘어나지 않도록 한다. 집 이동과 전투 물리의 제한은 유지한다.

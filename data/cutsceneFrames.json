@@ -114,39 +114,6 @@
       ],
       "anchor": 67,
       "unit": 0.009
-    },
-    {
-      "source": "/sprites/player.png",
-      "rect": [
-        309,
-        13,
-        166,
-        251
-      ],
-      "anchor": 67,
-      "unit": 0.009
-    },
-    {
-      "source": "/sprites/player.png",
-      "rect": [
-        566,
-        13,
-        165,
-        251
-      ],
-      "anchor": 66,
-      "unit": 0.009
-    },
-    {
-      "source": "/sprites/player.png",
-      "rect": [
-        822,
-        14,
-        164,
-        250
-      ],
-      "anchor": 66,
-      "unit": 0.009
     }
   ],
   "mariaRun": [
@@ -205,7 +172,7 @@
         244
       ],
       "anchor": 96.0,
-      "unit": 0.009
+      "unit": 0.0078
     },
     {
       "source": "/sprites/enemies.png",
@@ -216,7 +183,7 @@
         244
       ],
       "anchor": 83.5,
-      "unit": 0.009
+      "unit": 0.0078
     },
     {
       "source": "/sprites/enemies.png",
@@ -227,7 +194,7 @@
         244
       ],
       "anchor": 84.0,
-      "unit": 0.009
+      "unit": 0.0078
     },
     {
       "source": "/sprites/enemies.png",
@@ -238,7 +205,7 @@
         243
       ],
       "anchor": 83.0,
-      "unit": 0.009
+      "unit": 0.0078
     },
     {
       "source": "/sprites/enemies.png",
@@ -249,7 +216,7 @@
         243
       ],
       "anchor": 87.0,
-      "unit": 0.009
+      "unit": 0.0078
     },
     {
       "source": "/sprites/enemies.png",
@@ -260,7 +227,7 @@
         242
       ],
       "anchor": 83.5,
-      "unit": 0.009
+      "unit": 0.0078
     },
     {
       "source": "/sprites/enemies.png",
@@ -271,7 +238,7 @@
         242
       ],
       "anchor": 88.5,
-      "unit": 0.009
+      "unit": 0.0078
     }
   ],
   "guardAction": [
@@ -284,7 +251,7 @@
         287
       ],
       "anchor": 83.0,
-      "unit": 0.009
+      "unit": 0.0078
     },
     {
       "source": "/sprites/enemies.png",
@@ -295,7 +262,7 @@
         282
       ],
       "anchor": 82.0,
-      "unit": 0.009
+      "unit": 0.0078
     },
     {
       "source": "/sprites/enemies.png",
@@ -306,7 +273,7 @@
         284
       ],
       "anchor": 80.0,
-      "unit": 0.009
+      "unit": 0.0078
     },
     {
       "source": "/sprites/enemies.png",
@@ -317,7 +284,7 @@
         283
       ],
       "anchor": 84.5,
-      "unit": 0.009
+      "unit": 0.0078
     },
     {
       "source": "/sprites/enemies.png",
@@ -328,7 +295,7 @@
         279
       ],
       "anchor": 64.0,
-      "unit": 0.009
+      "unit": 0.0078
     },
     {
       "source": "/sprites/enemies.png",
@@ -339,7 +306,7 @@
         279
       ],
       "anchor": 64.5,
-      "unit": 0.009
+      "unit": 0.0078
     },
     {
       "source": "/sprites/enemies.png",
@@ -350,7 +317,7 @@
         278
       ],
       "anchor": 64.0,
-      "unit": 0.009
+      "unit": 0.0078
     },
     {
       "source": "/sprites/enemies.png",
@@ -361,7 +328,7 @@
         278
       ],
       "anchor": 64.0,
-      "unit": 0.009
+      "unit": 0.0078
     }
   ],
   "guardHold": [
@@ -374,7 +341,20 @@
         287
       ],
       "anchor": 83.0,
-      "unit": 0.009
+      "unit": 0.0078
+    }
+  ],
+  "guardAim": [
+    {
+      "source": "/intro/guard-aim.png",
+      "rect": [
+        318,
+        105,
+        804,
+        997
+      ],
+      "anchor": 265,
+      "unit": 0.0022935779816513763
     }
   ]
 }

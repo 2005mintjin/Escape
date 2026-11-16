@@ -1,0 +1,2 @@
+// A cheap, static overlay leaves the aiming canvas, HUD and touch hit targets intact.
+export function cinematicOverlay(game){const node=document.createElement('div');node.id='combat-vignette';node.setAttribute('aria-hidden','true');node.hidden=true;document.querySelector('#world').after(node);return ()=>{node.hidden=!['playing','paused','dying','dead','extracting','clear'].includes(game.state);};}

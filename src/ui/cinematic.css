@@ -1,0 +1,3 @@
+#combat-vignette{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 44%,transparent 42%,rgba(6,10,14,.09) 68%,rgba(3,5,8,.32) 100%);box-shadow:inset 0 10px 30px #03050712,inset 0 -12px 35px #0305071c}
+#combat-vignette[hidden]{display:none}
+#combat-vignette{animation:combat-edge-in .9s ease-out both}@keyframes combat-edge-in{from{opacity:0}to{opacity:1}}@media(prefers-reduced-motion:reduce){#combat-vignette{animation:none}}

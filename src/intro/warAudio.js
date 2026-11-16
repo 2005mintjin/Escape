@@ -1,8 +1,9 @@
 import {assetUrl} from '../core/assets.js';
 import {warShot} from './warSequence.js';
-// Timed foley belongs to the cinematic, never the playable home's sound bus.
+const IMPACTS=[11.15,12.8,14.1];
 export class WarAudio{
- constructor(makeAudio=url=>new Audio(url)){this.impact=makeAudio(assetUrl('/audio/trap-impact.mp3'));this.steps=makeAudio(assetUrl('/audio/escape-steps.mp3'));this.impact.volume=.65;this.impact.playbackRate=.65;this.steps.volume=.35;this.steps.loop=true;this.seen=new Set();this.last=0;}
- stop(){for(const a of [this.impact,this.steps]){a.pause();a.currentTime=0;}this.seen.clear();this.last=0;}
- update(story,hidden=false){if(!story.active||story.mode!=='cutscene'){this.stop();return;}if(story.paused||hidden){this.impact.pause();this.steps.pause();return;}const t=story.cutsceneElapsed;if(t<this.last)this.stop();this.last=t;for(const cue of [11.15,12.8,14.1])if(t>=cue&&!this.seen.has(cue)){this.seen.add(cue);this.impact.currentTime=0;this.impact.play().catch(()=>{});}if(warShot(t).id==='escape'){if(this.steps.paused)this.steps.play().catch(()=>{});}else this.steps.pause();}
+ constructor(makeAudio=url=>new Audio(url)){this.impacts=IMPACTS.map(()=>makeAudio(assetUrl('/audio/cinematic-explosion.mp3')));this.impact=this.impacts[0];for(const a of this.impacts){a.volume=.45;a.playbackRate=1;a.onended=()=>this.active.delete(a);}this.steps=makeAudio(assetUrl('/audio/run-steps.mp3'));this.steps.volume=.35;this.steps.loop=true;this.seen=new Set();this.active=new Set();this.pending=new Set();this.last=0;}
+ play(a){if(this.pending.has(a))return;this.pending.add(a);Promise.resolve(a.play()).catch(()=>this.active.delete(a)).finally(()=>this.pending.delete(a));}
+ stop(){for(const a of [...this.impacts,this.steps]){a.pause();a.currentTime=0;}this.seen.clear();this.active.clear();this.pending.clear();this.last=0;}
+ update(story,hidden=false){if(!story.active||story.mode!=='cutscene'){this.stop();return;}if(story.paused||hidden){for(const a of [...this.impacts,this.steps])a.pause();this.pending.clear();return;}const t=story.cutsceneElapsed;if(t<this.last)this.stop();this.last=t;IMPACTS.forEach((cue,i)=>{if(t>=cue&&!this.seen.has(cue)){this.seen.add(cue);const a=this.impacts[i];a.currentTime=0;this.active.add(a);this.play(a);}});for(const a of this.active)if(a.paused)this.play(a);if(warShot(t).id==='escape'){if(this.steps.paused)this.play(this.steps);}else this.steps.pause();}
 }
