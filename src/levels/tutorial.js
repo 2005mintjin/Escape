@@ -1,0 +1,3 @@
+const walls=[[0,6],[10,16],[20,26],[30,34],[38,44],[50,53]].map(([a,b])=>({min:{x:a,y:0,z:-.45},max:{x:b,y:1.25,z:.45}}));
+const target=(id,x)=>({id,x,min:x,max:x,direction:1,speed:0,range:0,fov:1,training:true});
+export const tutorialLevel={id:'tutorial',number:0,name:'탈출 준비 · 튜토리얼',start:2,exit:55,length:58,exitStyle:'door',palette:'#0b121e',brief:'안전한 연습 구역입니다. 안내에 따라 장비를 사용하고 오른쪽 문으로 나가세요.',walls,guards:[target('rifle',8),target('pistol',18),target('knife',28),target('trap',40)],panels:[{id:'training-trap',trainingStep:4,x:36,z:-3,y:1.1,trapX:40},{id:'training-switch',trainingStep:5,x:46,z:-3,y:1.1,type:'lights',lights:['training-light'],required:false}],lamps:[{id:'training-light',trainingStep:5,x:48,z:-3,y:2.7,required:true}]};

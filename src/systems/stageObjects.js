@@ -1,10 +1,12 @@
+import {tutorialLesson} from './tutorial.js';
 import config from '../../data/gameConfig.json' with {type:'json'};
 import {blocked} from './collision.js';
 export const lightOff=light=>light.broken||light.switchedOff;
 export const exitEntry=game=>game.level.exit-.35;
 export const lightsComplete=game=>game.lamps.filter(light=>light.required).every(lightOff);
-export const exitOpen=game=>lightsComplete(game)&&game.panels.filter(panel=>panel.required!==false).every(panel=>panel.active);
+export const exitOpen=game=>(!game.inTutorial||game.tutorial?.complete)&&lightsComplete(game)&&game.panels.filter(panel=>panel.required!==false).every(panel=>panel.active);
 export function stageObjective(game){
+ if(game.inTutorial)return tutorialLesson(game).goal;
  const lightTotal=game.lamps.filter(l=>l.required).length,lightDone=game.lamps.filter(l=>l.required&&lightOff(l)).length;
  if(!lightsComplete(game))return `감시등 차단 ${lightDone} / ${lightTotal} · 사격 / 조명 제어판 F`;
  const panel=game.panels.find(p=>p.required!==false&&!p.active);if(panel)return `제어판 ${panel.x}m · F / 칼 또는 사격`;
@@ -15,6 +17,7 @@ export function nearbyPanel(game,reach){const p=game.player;return game.panels.f
 export function activatePanel(game,panel){
  game.soundEvents.push({key:'panel'});
  if(panel.active)return;
+ if(game.inTutorial&&game.tutorial.step<panel.trainingStep){game.message='앞선 연습을 마치면 이 제어판을 사용할 수 있습니다';return;}
  if(panel.requiresLights&&!lightsComplete(game)){game.message='먼저 감시등을 사격하거나 조명 제어판으로 차단하세요';return;}
  panel.active=true;panel.activatedAt=game.time;
  if(panel.type==='lights'){for(const lamp of game.lamps)if(panel.lights.includes(lamp.id))lamp.switchedOff=true;game.message='조명 전원 차단 · 밝은 위험 구역 해제';return;}

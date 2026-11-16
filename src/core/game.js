@@ -1,3 +1,5 @@
+import {tutorialLevel} from '../levels/tutorial.js';
+import {updateTutorial} from '../systems/tutorial.js';
 import config from '../../data/gameConfig.json' with {type:'json'};
 import {levels} from '../levels/campaign.js';
 import {beginDash} from '../systems/dash.js';
@@ -10,9 +12,10 @@ import {movePlayer} from '../systems/movement.js';
 import {fireProjectile,updateProjectiles} from '../systems/projectiles.js';
 export class Game {
  constructor(random=Math.random){this.random=random;this.stageIndex=0;this.pistolAmmo=config.pistol.rounds;this.stagePistolAmmo=this.pistolAmmo;this.reset();}
- reset(){this.pistolAmmo=this.stagePistolAmmo??config.pistol.rounds;this.level=levels[this.stageIndex];this.lamps=this.level.lamps.map(l=>({...l,broken:false}));this.panels=this.level.panels.map(p=>({...p,active:false}));this.player={x:this.level.start,z:config.playerZ,crouch:false,aiming:false,weapon:'rifle',burst:null,dashCooldown:0,deathElapsed:0,health:config.playerHealth,hurt:0,stamina:config.staminaSeconds,exhausted:false,recoverDelay:0,direction:1,ammo:config.magazine,reserve:config.reserve,reload:0,shot:0,shotDuration:config.shotCooldown,lastShotWeapon:'rifle',knifeCooldown:0,melee:null,dead:false};this.enemies=this.level.guards.map(e=>({...e,z:config.enemyZ,state:'Patrol',meter:0,detected:false,hasDetectionStarted:false,charging:false,notice:0,timer:0,idle:0,dead:false,radio:0,radioActive:false,radioClip:null,corpseTarget:null,searchTime:0}));this.extractionElapsed=0;this.extractionStartX=0;this.soundEvents=[];this.state='playing';this.lockdown=false;this.time=0;this.projectiles=[];this.message=this.level.brief;}
- startCampaign(){this.stageIndex=0;this.pistolAmmo=config.pistol.rounds;this.stagePistolAmmo=this.pistolAmmo;this.reset();}
- nextStage(){if(this.state!=='clear'||this.stageIndex>=levels.length-1)return false;const weapon=this.player.weapon;this.stagePistolAmmo=this.pistolAmmo;this.stageIndex++;this.reset();this.player.weapon=weapon;return true;}
+ reset(){this.pistolAmmo=this.stagePistolAmmo??config.pistol.rounds;this.level=this.inTutorial?tutorialLevel:levels[this.stageIndex];this.tutorial=this.inTutorial?{step:0,cover:0,complete:false}:null;this.lamps=this.level.lamps.map(l=>({...l,broken:false}));this.panels=this.level.panels.map(p=>({...p,active:false}));this.player={x:this.level.start,z:config.playerZ,crouch:false,aiming:false,weapon:'rifle',burst:null,dashCooldown:0,deathElapsed:0,health:config.playerHealth,hurt:0,stamina:config.staminaSeconds,exhausted:false,recoverDelay:0,direction:1,ammo:config.magazine,reserve:config.reserve,reload:0,shot:0,shotDuration:config.shotCooldown,lastShotWeapon:'rifle',knifeCooldown:0,melee:null,dead:false};this.enemies=this.level.guards.map(e=>({...e,z:config.enemyZ,state:e.training?'Idle':'Patrol',meter:0,detected:false,hasDetectionStarted:false,charging:false,notice:0,timer:0,idle:0,dead:false,radio:0,radioActive:false,radioClip:null,corpseTarget:null,searchTime:0}));this.extractionElapsed=0;this.extractionStartX=0;this.soundEvents=[];this.state='playing';this.lockdown=false;this.time=0;this.projectiles=[];this.message=this.level.brief;}
+ startCampaign(){this.inTutorial=false;this.stageIndex=0;this.pistolAmmo=config.pistol.rounds;this.stagePistolAmmo=this.pistolAmmo;this.reset();}
+ startTutorial(){this.inTutorial=true;this.stageIndex=0;this.stagePistolAmmo=this.pistolAmmo=config.pistol.rounds;this.reset();}
+ nextStage(){if(this.inTutorial&&this.state==='clear'){this.startCampaign();return true;}if(this.state!=='clear'||this.stageIndex>=levels.length-1)return false;const weapon=this.player.weapon;this.stagePistolAmmo=this.pistolAmmo;this.stageIndex++;this.reset();this.player.weapon=weapon;return true;}
  selectWeapon(weapon){const p=this.player;if(this.state!=='playing'||!['rifle','pistol'].includes(weapon)||p.melee||p.burst||p.reload)return false;p.weapon=weapon;return true;}
  toggleWeapon(){return this.selectWeapon(this.player.weapon==='rifle'?'pistol':'rifle');}
  dash(input){return beginDash(this,input,config);}
@@ -21,8 +24,8 @@ export class Game {
 
  update(dt,input){if(this.state==='extracting'){this.extractionElapsed+=dt;this.time+=dt;this.player.x=this.extractionStartX+Math.min(1,this.extractionElapsed/.6)*1.4;this.player.moving=true;if(this.extractionElapsed+1e-9>=config.extractionSeconds){this.state='clear';this.nextStage();}return;}if(this.state==='dying'){this.player.deathElapsed+=dt;if(this.player.deathElapsed>=1)this.state='dead';return;}if(this.state!=='playing')return;this.time+=dt;const p=this.player;this.stance(input);p.hurt=Math.max(0,p.hurt-dt);p.dashCooldown=Math.max(0,p.dashCooldown-dt);movePlayer(p,dt,input,{...config,length:this.level.length});p.shot=Math.max(0,p.shot-dt);p.knifeCooldown=Math.max(0,p.knifeCooldown-dt);stepMelee(this,dt,config,this.level.walls);
  if(p.reload>0){p.reload=Math.max(0,p.reload-dt);if(!p.reload){const n=Math.min(config.magazine-p.ammo,p.reserve);p.ammo+=n;p.reserve-=n;}}
- updateStageObjects(this);updateProjectiles(this,dt);if(p.dead)return;
- for(const e of this.enemies){if(e.dead)continue;if(inLight(this)&&Math.hypot(e.x-p.x,e.z-p.z)<=Math.min(config.lightAlertRange,e.range)){e.meter=1;e.detected=true;}const seen=visible(e,p,this.level.walls);
+ updateStageObjects(this);updateProjectiles(this,dt);updateTutorial(this,dt);if(p.dead)return;
+ for(const e of this.enemies){if(e.dead||this.inTutorial)continue;if(inLight(this)&&Math.hypot(e.x-p.x,e.z-p.z)<=Math.min(config.lightAlertRange,e.range)){e.meter=1;e.detected=true;}const seen=visible(e,p,this.level.walls);
  const noticing=advanceDetection(e,seen,dt,inShadow(this)&&!this.lockdown?{...config,detectionSeconds:config.detectionSeconds*2.5}:config,this.lockdown,this.time);
  if(isRadioActive(e)){radioStep(this,e,dt,config,this.level.walls);continue;}
  if(noticing)continue;
@@ -44,6 +47,6 @@ export class Game {
  const stats=silent?config.pistol:{cooldown:config.shotCooldown,speed:config.playerBulletSpeed,range:config.weaponRange};
  if(silent)this.pistolAmmo--;else p.ammo--;p.shot=p.shotDuration=stats.cooldown;p.lastShotWeapon=p.weapon;
  fireProjectile(this,{x:p.x,y:1.65,z:p.z},target,{speed:stats.speed,range:stats.range});this.soundEvents.push({key:silent?'pistol':'player'});
- if(!silent)rally(this.enemies,onscreen,p.x,config.investigateSeconds);this.message=silent?'소음 사격 · 총성 집결 없음':'총성 · 화면 안 경비병이 사격 위치로 집결합니다';return true;}
+ if(!silent&&!this.inTutorial)rally(this.enemies,onscreen,p.x,config.investigateSeconds);this.message=silent?'소음 사격 · 총성 집결 없음':'총성 · 화면 안 경비병이 사격 위치로 집결합니다';return true;}
 }
 export {config,level};

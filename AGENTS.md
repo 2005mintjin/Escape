@@ -39,3 +39,5 @@
 - 컷신 시간은 introDelta로 실제 RAF 경과 시간을 사용한다(최대 1초). 게임 물리용 50ms 제한을 컷신에 적용하여 녹음과 시각 효과의 시간이 늘어나지 않도록 한다. 집 이동과 전투 물리의 제한은 유지한다.
 
 - 서랍 앞판은 열고 닫을 때 동일한 고정 스프라이트/기준점을 사용하고, 열린 내부 테두리만 추가한다. drawer-aligned.png와 homeFurniture.json을 수정할 때 e2e/cutscene.mjs에서 앞판 월드 위치/크기 불변을 검증한다. 적 사망은 enemyAnimation.js/EnemyDeathClock과 enemyDeath/guardDeath 6프레임을 사용한다. 사망 때 스프라이트 전체를 회전시키지 말고, 마지막 누운 프레임을 유지하며 재시작 기록을 초기화한다. enemy-fall.test.js/e2e/enemy-fall.mjs로 검증한다.
+
+- 튜토리얼은 levels/tutorial.js로 분리하고 기존 levels 배열 세 작전의 순서를 바꾸지 않는다. Game.inTutorial/reset/startTutorial과 systems/tutorial.js가 연습 상태를 관리한다. practice 표적만 AI를 생략하며 실제 탄환/근접/함정/조명 판정으로 단계를 완료한다. 명중 무기는 발사 당시 projectile.weapon을 사용한다. 튜토리얼 종료/건너뛰기는 새 캠페인 6발, 일반 작전 간에는 잔탄 체크포인트를 보존한다. tests/tutorial.test.js와 e2e/tutorial.mjs의 PC/터치 전체 완료, 기존 campaign 회귀를 검증한다. 안내/재시작/건너뛰기 버튼은 HUD 밖 고정 DOM으로 유지한다. 컷신 음악은 warAudio.music의 단일 반복 채널이며 홈/자막/전투에서는 정지하고 암전에서 페이드한다.
