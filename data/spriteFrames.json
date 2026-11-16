@@ -614,5 +614,97 @@
       "anchor": 64.0,
       "unit": 0.009
     }
+  ],
+  "melee": [
+    {
+      "source": "knife.png",
+      "rect": [
+        140,
+        120,
+        194,
+        280
+      ],
+      "anchor": 82.0,
+      "unit": 0.008
+    },
+    {
+      "source": "knife.png",
+      "rect": [
+        574,
+        120,
+        190,
+        280
+      ],
+      "anchor": 91.5,
+      "unit": 0.008
+    },
+    {
+      "source": "knife.png",
+      "rect": [
+        1005,
+        121,
+        245,
+        279
+      ],
+      "anchor": 103.5,
+      "unit": 0.008
+    },
+    {
+      "source": "knife.png",
+      "rect": [
+        1445,
+        121,
+        181,
+        279
+      ],
+      "anchor": 107.0,
+      "unit": 0.008
+    }
+  ],
+  "meleeCrouch": [
+    {
+      "source": "knife.png",
+      "rect": [
+        127,
+        610,
+        220,
+        216
+      ],
+      "anchor": 95.0,
+      "unit": 0.008
+    },
+    {
+      "source": "knife.png",
+      "rect": [
+        563,
+        609,
+        202,
+        217
+      ],
+      "anchor": 102.5,
+      "unit": 0.008
+    },
+    {
+      "source": "knife.png",
+      "rect": [
+        988,
+        611,
+        264,
+        215
+      ],
+      "anchor": 120.5,
+      "unit": 0.008
+    },
+    {
+      "source": "knife.png",
+      "rect": [
+        1427,
+        610,
+        185,
+        216
+      ],
+      "anchor": 125.0,
+      "unit": 0.008
+    }
   ]
 }

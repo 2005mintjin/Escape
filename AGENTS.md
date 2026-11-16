@@ -14,4 +14,5 @@
 - `src/ui/touchControls.js`: 별도 고정 DOM의 모바일 입력. HUD innerHTML 안에 넣지 않는다. 포인터 캡처/취소와 멀티터치를 보존하고 변경 시 e2e/mobile.mjs를 실행한다.
 - `src/ui/theme.css`: 검정/갈색/황동 UI 테마. 기본 배치 style.css와 분리한다. `src/audio/music.js`: 단일 반복 BGM 및 브라우저 자동재생 대응. 변경 시 music.test.js와 e2e/theme-music.mjs 검증.
 - `src/ui/pauseControl.js`: PC 일시정지 버튼은 고정 DOM으로 유지한다. HUD innerHTML에 넣지 않는다. PC 입력/버튼 변경 시 배포 preview에서 e2e/desktop.mjs를 실행한다.
+- `src/audio/siren.js`: lockdown 전환 때 스테이지당 한 번 재생하는 사이렌. 무전 도중에는 시작하지 않는다. `melee/meleeCrouch` 프레임과 F 즉시 공격은 e2e/siren-knife.mjs 및 PC/모바일 입력 테스트로 검증한다.
 - 비밀키/생성물/node_modules를 커밋하지 않는다. 변경 파일과 검증 결과를 간결히 보고한다.

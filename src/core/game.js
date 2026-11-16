@@ -11,7 +11,7 @@ export class Game {
  reset(){this.player={x:level.start,z:config.playerZ,crouch:false,aiming:false,weapon:'rifle',deathElapsed:0,health:config.playerHealth,hurt:0,stamina:config.staminaSeconds,exhausted:false,recoverDelay:0,direction:1,ammo:config.magazine,reserve:config.reserve,reload:0,shot:0,knifeCooldown:0,melee:null,dead:false};this.enemies=definitions.map(e=>({...e,z:config.enemyZ,state:'Patrol',meter:0,detected:false,hasDetectionStarted:false,charging:false,notice:0,timer:0,idle:0,dead:false,radio:0,radioClip:null,corpseTarget:null,searchTime:0}));this.state='playing';this.lockdown=false;this.time=0;this.tracers=[];this.message='낮은 벽 아래로 이동하세요';}
  damagePlayer(){if(this.state!=='playing')return;const p=this.player;p.health=Math.max(0,p.health-1);p.hurt=.3;if(!p.health){p.dead=true;p.deathElapsed=0;this.state='dying';}}
  stance(input){this.player.crouch=this.player.melee?false:!!input.crouch;this.player.aiming=!!input.aim;}
- switchWeapon(){if(this.state!=='playing'||this.player.melee)return;this.player.weapon=this.player.weapon==='rifle'?'knife':'rifle';}
+
  update(dt,input){if(this.state==='dying'){this.player.deathElapsed+=dt;if(this.player.deathElapsed>=1)this.state='dead';return;}if(this.state!=='playing')return;this.time+=dt;const p=this.player;this.stance(input);p.hurt=Math.max(0,p.hurt-dt);movePlayer(p,dt,input,config);p.shot=Math.max(0,p.shot-dt);p.knifeCooldown=Math.max(0,p.knifeCooldown-dt);stepMelee(this,dt,config,level.walls);
  if(p.reload>0){p.reload=Math.max(0,p.reload-dt);if(!p.reload){const n=Math.min(config.magazine-p.ammo,p.reserve);p.ammo+=n;p.reserve-=n;}}
  this.tracers=this.tracers.filter(t=>(t.life-=dt)>0);
@@ -30,7 +30,7 @@ export class Game {
  else if(radioStep(this,e,dt,config,level.walls)){}else if(investigate(e,dt,config)){}else if(e.meter>0){e.state='Suspicious';}else if(e.idle>0){e.idle-=dt;e.state='Idle';}else{e.state='Patrol';e.x+=e.direction*e.speed*dt;if(e.x>=e.max||e.x<=e.min){e.x=Math.max(e.min,Math.min(e.max,e.x));e.direction*=-1;e.idle=1.5;}}
  }
  if(p.x>=level.exit&&!p.dead)this.state='clear';}
- knife(){if(this.player.weapon!=='knife')return false;return beginMelee(this,config,level.walls);}
+ knife(){return beginMelee(this,config,level.walls);}
  reload(){const p=this.player;if(this.state==='playing'&&!p.melee&&!p.reload&&p.ammo<config.magazine&&p.reserve)p.reload=config.reloadSeconds;}
  shoot(target,onscreen=[]){const p=this.player;if(this.state!=='playing'||p.weapon!=='rifle'||p.reload||p.melee||p.shot>0)return false;if(!p.aiming){this.message='Shift를 누른 채 클릭하여 사격하세요';return false;}if(!p.ammo){this.message='R 키로 재장전';return false;}p.ammo--;p.shot=config.shotCooldown;const a={x:p.x,y:1.65,z:p.z};let b={...target};const distance=Math.hypot(b.x-a.x,b.y-a.y,b.z-a.z);
  if(distance>config.weaponRange){const scale=config.weaponRange/distance;b={x:a.x+(b.x-a.x)*scale,y:a.y+(b.y-a.y)*scale,z:a.z+(b.z-a.z)*scale};}let hit=null;
