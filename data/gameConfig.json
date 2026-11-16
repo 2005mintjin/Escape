@@ -26,5 +26,10 @@
   "staminaRestart": 1,
   "suspicionSeconds": 0.55,
   "enemyShotInterval": 1.1,
-  "playerHealth": 3
+  "playerHealth": 3,
+  "dashCost": 1.2,
+  "dashCooldown": 2.4,
+  "dashDuration": 0.26,
+  "rollDuration": 0.26,
+  "dashDistance": 4.2
 }

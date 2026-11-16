@@ -1,20 +1,20 @@
 import {assetUrl} from '../core/assets.js';
 import * as THREE from 'three';
 import {lampPositions} from './nightLighting.js';
-import {level} from '../levels/level01.js';
+import {level as defaultLevel} from '../levels/level01.js';
 // UV rectangles select individual source pieces; collision walls remain the actual 3D solids.
 function piece(source,[x,y,w,h]){const t=source.clone(),W=source.image.width,H=source.image.height;t.repeat.set((w-1)/W,(h-1)/H);t.offset.set((x+.5)/W,1-(y+h-.5)/H);t.needsUpdate=true;return t;}
-export async function buildEnvironment(scene){
+export async function buildEnvironment(scene,level=defaultLevel){
  const loader=new THREE.TextureLoader();const [tiles,props,walls,buildings,backdrop]=await Promise.all(['materials','props','walls','buildings','reference'].map(name=>loader.loadAsync(assetUrl('/environment/'+name+'.png'))));
  for(const t of [tiles,props,walls,buildings,backdrop]){t.colorSpace=THREE.SRGBColorSpace;t.magFilter=THREE.NearestFilter;t.generateMipmaps=false;t.minFilter=THREE.LinearFilter;}
  const xs=[7,168,322,477,634,788,944,1102],ys=[7,168,322,474,628,782,916,1077],widths=[148,144,145,145,145,145,146,144],heights=[152,145,145,145,145,126,151,165];
  const tile=(col,row)=>piece(tiles,[xs[col]+3,ys[row]+3,widths[col]-6,heights[row]-6]);
  const materials={brick:new THREE.MeshStandardMaterial({map:tile(1,0),roughness:1}),stone:new THREE.MeshStandardMaterial({map:tile(0,3),roughness:1}),plaster:new THREE.MeshStandardMaterial({map:tile(3,1),roughness:1}),floor:new THREE.MeshStandardMaterial({map:tile(1,7),roughness:1}),curb:new THREE.MeshStandardMaterial({map:tile(0,6),roughness:1})};
- const box=(x,y,z,w,h,d,material)=>{const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);mesh.position.set(x,y,z);mesh.userData.environment=true;scene.add(mesh);return mesh;};
+ const boxes=new Map(),transform=new THREE.Object3D();const box=(x,y,z,w,h,d,material)=>{transform.position.set(x,y,z);transform.rotation.set(0,0,0);transform.scale.set(w,h,d);transform.updateMatrix();if(!boxes.has(material))boxes.set(material,[]);boxes.get(material).push(transform.matrix.clone());};
  const panel=(texture,x,y,z,w,h)=>{const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshStandardMaterial({roughness:1,map:texture,transparent:true,alphaTest:.3,side:THREE.DoubleSide}));mesh.position.set(x,y+h/2,z);mesh.userData.environment=true;scene.add(mesh);return mesh;};
  // Distant reference matte behind real facades supplies the ruined cathedral and smoke skyline.
  const skyline=panel(backdrop,28,-48,-54,160,90);skyline.material=new THREE.MeshBasicMaterial({map:backdrop,color:'#25354c',fog:true});
- for(let x=-8;x<68;x+=2)for(let z=-22;z<8;z+=2){const ground=new THREE.Mesh(new THREE.PlaneGeometry(2,2),z>1?materials.curb:materials.floor);ground.rotation.x=-Math.PI/2;ground.position.set(x,.015,z);ground.userData.environment=true;scene.add(ground);}
+ for(const material of [materials.curb,materials.floor]){const positions=[];for(let x=-8;x<68;x+=2)for(let z=-22;z<8;z+=2)if((z>1?materials.curb:materials.floor)===material)positions.push([x,z]);const ground=new THREE.InstancedMesh(new THREE.PlaneGeometry(2,2),material,positions.length);positions.forEach(([x,z],i)=>{transform.position.set(x,.015,z);transform.rotation.set(-Math.PI/2,0,0);transform.scale.set(1,1,1);transform.updateMatrix();ground.setMatrixAt(i,transform.matrix);});ground.userData.environment=true;scene.add(ground);}
  // Broken 3D buildings: floors, pillars, partial walls and missing bays give depth through windows.
  for(let i=0;i<10;i++){
   const x=i*8-8,z=i%2?-16:-21,stories=2+i%3;
@@ -39,5 +39,6 @@ export async function buildEnvironment(scene){
  for(let i=0;i<14;i++){prop('rubble',i*4.8-4,-8-(i%3),1.8);if(i%3===0)prop('sandbags',i*4.8,-6.5,2.6);}
  for(const x of lampPositions){prop('lamp',x,-8,1);prop('crate',x+1,-7,1.15);prop('barrel',x+2,-7,0.7);}
  prop('sign',52,4.5,1.1);prop('barrier',26,-7,2);prop('rubble',8,6.5,1.5);prop('rubble',35,6.6,1.6);
+ for(const [material,matrices] of boxes){const mesh=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),material,matrices.length);matrices.forEach((matrix,i)=>mesh.setMatrixAt(i,matrix));mesh.userData.environment=true;scene.add(mesh);}
  return materials;
 }

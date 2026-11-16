@@ -6,6 +6,7 @@
 - `src/rendering`: Three.js 월드, 카메라와 스프라이트 아틀라스. 프레임별 영역/기준점은 data/spriteFrames.json, PNG 로드/UV는 sprites.js, 동작 선택은 animation.js에서 담당. 임의의 균등 분할이나 웅크림 세로 압축을 추가하지 않는다. public/sprites 이미지 교체 시 행·열 및 바닥 앵커를 유지한다.
 - `src/systems/movement.js`: 스태미나와 실제 달리기 속도. `src/core/input.js`: S 전용 앉기와 더블탭 입력.
 - `src/rendering/environment.js`: 제공 이미지 기반 배경/소품/재질. 장식과 level01.js의 실제 엄폐 충돌을 구분한다.
+- `src/levels/campaign.js`: 3개 작전의 벽·경비·조명·제어판·출구 데이터. `systems/stageObjects.js`: 조명 사격/제어판/낙하물/출구 조건. `rendering/stageView.js`: 외형과 광원 및 자원 해제. `systems/dash.js`: Q 대시/구르기 비용·쿨다운. 변경 시 campaign.test.js와 e2e/campaign.mjs로 일반 AI 상태의 전체 클리어를 검증한다.
 - `src/levels`: 지형 데이터. `data`: AI/총기/게임 수치. `src/ui`: UI만 담당.
 - 변경 관련 파일만 읽고 수정한다. 단일 HTML에 로직을 합치지 않는다. 불필요한 파일 재작성/ZIP 생성 금지.
 - 로직 변경은 관련 `node --test --test-name-pattern=...` 우선 실행. 공유 충돌/게임 상태 변경은 `npm test` 전체 실행.
