@@ -617,94 +617,94 @@
   ],
   "melee": [
     {
-      "source": "knife.png",
+      "source": "knife-v2.png",
       "rect": [
-        140,
-        120,
-        194,
-        280
+        105,
+        27,
+        196,
+        410
       ],
-      "anchor": 82.0,
-      "unit": 0.008
+      "anchor": 110,
+      "unit": 0.0055
     },
     {
-      "source": "knife.png",
+      "source": "knife-v2.png",
       "rect": [
-        574,
-        120,
-        190,
-        280
+        520,
+        46,
+        239,
+        391
       ],
-      "anchor": 91.5,
-      "unit": 0.008
+      "anchor": 125,
+      "unit": 0.0055
     },
     {
-      "source": "knife.png",
+      "source": "knife-v2.png",
       "rect": [
-        1005,
-        121,
-        245,
-        279
+        932,
+        70,
+        378,
+        370
       ],
-      "anchor": 103.5,
-      "unit": 0.008
+      "anchor": 140,
+      "unit": 0.0055
     },
     {
-      "source": "knife.png",
+      "source": "knife-v2.png",
       "rect": [
-        1445,
-        121,
-        181,
-        279
+        1435,
+        28,
+        191,
+        409
       ],
-      "anchor": 107.0,
-      "unit": 0.008
+      "anchor": 110,
+      "unit": 0.0055
     }
   ],
   "meleeCrouch": [
     {
-      "source": "knife.png",
+      "source": "knife-v2.png",
       "rect": [
-        127,
-        610,
-        220,
-        216
-      ],
-      "anchor": 95.0,
-      "unit": 0.008
-    },
-    {
-      "source": "knife.png",
-      "rect": [
-        563,
-        609,
+        95,
+        531,
         202,
-        217
+        340
       ],
-      "anchor": 102.5,
-      "unit": 0.008
+      "anchor": 115,
+      "unit": 0.0055
     },
     {
-      "source": "knife.png",
+      "source": "knife-v2.png",
       "rect": [
-        988,
-        611,
-        264,
-        215
+        513,
+        555,
+        249,
+        316
       ],
-      "anchor": 120.5,
-      "unit": 0.008
+      "anchor": 127,
+      "unit": 0.0055
     },
     {
-      "source": "knife.png",
+      "source": "knife-v2.png",
       "rect": [
-        1427,
-        610,
-        185,
-        216
+        932,
+        577,
+        378,
+        294
       ],
-      "anchor": 125.0,
-      "unit": 0.008
+      "anchor": 128,
+      "unit": 0.0055
+    },
+    {
+      "source": "knife-v2.png",
+      "rect": [
+        1428,
+        534,
+        196,
+        337
+      ],
+      "anchor": 117,
+      "unit": 0.0055
     }
   ]
 }
