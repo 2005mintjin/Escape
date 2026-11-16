@@ -277,48 +277,48 @@
   ],
   "crouchWalk": [
     {
-      "source": "player-extra.png",
+      "source": "crouch-walk-v2.png",
       "rect": [
-        105,
-        107,
-        292,
-        267
+        62,
+        159,
+        432,
+        414
       ],
-      "anchor": 117.0,
-      "unit": 0.0063
+      "anchor": 173,
+      "unit": 0.00406
     },
     {
-      "source": "player-extra.png",
+      "source": "crouch-walk-v2.png",
       "rect": [
-        527,
-        106,
-        289,
-        268
+        604,
+        159,
+        433,
+        414
       ],
-      "anchor": 138.5,
-      "unit": 0.0063
+      "anchor": 174,
+      "unit": 0.00406
     },
     {
-      "source": "player-extra.png",
+      "source": "crouch-walk-v2.png",
       "rect": [
-        967,
-        114,
-        294,
-        258
+        1148,
+        159,
+        431,
+        414
       ],
-      "anchor": 141.5,
-      "unit": 0.0063
+      "anchor": 207,
+      "unit": 0.00406
     },
     {
-      "source": "player-extra.png",
+      "source": "crouch-walk-v2.png",
       "rect": [
-        1403,
-        112,
-        300,
-        262
+        1691,
+        159,
+        432,
+        414
       ],
-      "anchor": 149.0,
-      "unit": 0.0063
+      "anchor": 174,
+      "unit": 0.00406
     }
   ],
   "death": [
