@@ -1,12 +1,13 @@
+import {environmentTexture,sourceSize} from './textures.js';
 import {addBattlefieldDetails} from './battlefieldDetails.js';
 import {assetUrl} from '../core/assets.js';
 import * as THREE from 'three';
 import {lampPositions} from './nightLighting.js';
 import {level as defaultLevel} from '../levels/level01.js';
 // UV rectangles select individual source pieces; collision walls remain the actual 3D solids.
-function piece(source,[x,y,w,h]){const t=source.clone(),W=source.image.width,H=source.image.height;t.repeat.set((w-1)/W,(h-1)/H);t.offset.set((x+.5)/W,1-(y+h-.5)/H);t.needsUpdate=true;return t;}
+function piece(source,[x,y,w,h]){const t=source.clone(),[W,H]=sourceSize(source);t.repeat.set((w-1)/W,(h-1)/H);t.offset.set((x+.5)/W,1-(y+h-.5)/H);t.needsUpdate=true;return t;}
 export async function buildEnvironment(scene,level=defaultLevel){
- const loader=new THREE.TextureLoader();const [tiles,props,walls,buildings,backdrop]=await Promise.all(['materials','props','walls','buildings','reference'].map(name=>loader.loadAsync(assetUrl('/environment/'+name+'.png'))));
+ const [tiles,props,walls,buildings,backdrop]=await Promise.all(['materials','props','walls','buildings','reference'].map(name=>environmentTexture(scene,name)));
  for(const t of [tiles,props,walls,buildings,backdrop]){t.colorSpace=THREE.SRGBColorSpace;t.magFilter=THREE.NearestFilter;t.generateMipmaps=false;t.minFilter=THREE.LinearFilter;}
  const xs=[7,168,322,477,634,788,944,1102],ys=[7,168,322,474,628,782,916,1077],widths=[148,144,145,145,145,145,146,144],heights=[152,145,145,145,145,126,151,165];
  const tile=(col,row)=>piece(tiles,[xs[col]+3,ys[row]+3,widths[col]-6,heights[row]-6]);

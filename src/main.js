@@ -1,4 +1,6 @@
 import './style.css';
+import './ui/graphicsStatus.css';
+import {graphicsStatus} from './ui/graphicsStatus.js';
 import './ui/tutorial.css';
 import {tutorialUI} from './ui/tutorial.js';
 import './ui/cinematic.css';
@@ -23,7 +25,7 @@ const runningAudio=new RunAudio();const ambience=new BattlefieldAmbience();const
 addEventListener('pointerdown',()=>{if(game.state!=='title')music.unlock();ambience.unlock();runningAudio.unlock();siren.unlock();},{capture:true});
 const game=new Game(),world=new World(document.querySelector('canvas')),input=new Input();game.state='title';const updatePauseControl=pauseControl(game);const effects=new Effects();world.ready.catch(error=>{console.error(error);game.message='캐릭터 이미지를 불러오지 못했습니다. 새로고침하세요';});
 const updateCinematic=cinematicOverlay(game);
-const intro=new IntroExperience(world.renderer,(options={})=>{input.clear();touch.clear();if(!options.skipTutorial)game.startTutorial();game.state='playing';document.body.classList.remove('intro-title');world.renderer.setClearColor(game.level.palette);world.draw(game,0);updateUI(game,world,onMenu);});intro.ready.catch(error=>{console.error(error);intro.ui.nodes['home-loading'].textContent='집 안 이미지를 불러오지 못했습니다. 새로고침해 주세요.';});
+const intro=new IntroExperience(world.renderer,(options={})=>{input.clear();touch.clear();if(!options.skipTutorial)game.startTutorial();game.state='playing';document.body.classList.remove('intro-title');world.renderer.setClearColor(game.level.palette);world.draw(game,0);updateUI(game,world,onMenu);});intro.ready.catch(error=>{intro.loadError=error;console.error(error);intro.ui.nodes['home-loading'].textContent='집 안 이미지를 불러오지 못했습니다. 새로고침해 주세요.';});
 function onMenu(action){runningAudio.unlock();voices.unlock();ambience.unlock();input.clear();touch.clear();if(action==='intro'){game.startCampaign();game.state='intro';document.body.classList.remove('intro-title');intro.start();music.update(game.state,document.hidden,intro.story);music.unlock();}else{document.body.classList.remove('intro-title');if(action==='next')game.nextStage();else if(action==='campaign')game.startCampaign();else game.reset();world.renderer.setClearColor(game.level.palette);music.update(game.state,document.hidden);music.unlock();}}
 function point(x,y){world.setPointer(x,y);if(game.player.aiming)game.player.direction=x>=world.screen(game.player).x?1:-1;const c=document.querySelector('#crosshair');c.style.left=x+'px';c.style.top=y+'px';}
 function attack(x,y){if(intro.active)return;voices.unlock();game.stance(input);game.player.direction=x>=world.screen(game.player).x?1:-1;const target=world.aim(x,y);if(target&&game.shoot(target,world.visibleGuards(game.enemies))){world.kick();}}
@@ -36,7 +38,10 @@ let lastWheelSwitch=-Infinity;document.querySelector('#world').addEventListener(
 function pauseOnLeave(){input.clear();touch.clear();if(intro.active&&!intro.story.paused)intro.pause();if(game.state==='playing')game.state='paused';}
 addEventListener('blur',pauseOnLeave);document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseOnLeave();music.update(game.state,document.hidden,intro.active?intro.story:null);siren.update(game,document.hidden);ambience.update(game.state,document.hidden);runningAudio.update(game,document.hidden);});
 
-let last=performance.now();function loop(now){const elapsed=Math.max(0,(now-last)/1000),dt=Math.min(elapsed,.05);last=now;updateTutorialUI();updateCinematic();runningAudio.update(game,document.hidden);music.update(game.state,document.hidden,intro.active?intro.story:null);updateMusicControl();updatePauseControl();touch.update();ambience.update(game.state,document.hidden);if(intro.active||game.state==='title'){voices.update(game);siren.update(game,document.hidden);effects.update(game);}
- if(intro.active){intro.warAudio.music.muted=!music.enabled;intro.update(dt,input,elapsed);requestAnimationFrame(loop);return;}
- if(game.state==='title'){document.body.classList.add('intro-title');updateUI(game,world,onMenu);requestAnimationFrame(loop);return;}
- document.body.classList.remove('intro-title');if(!world.loading)game.update(dt,input);voices.update(game);siren.update(game,document.hidden);effects.update(game);ambience.update(game.state,document.hidden);runningAudio.update(game,document.hidden);world.renderer.setClearColor(game.level.palette);world.draw(game,dt);updateUI(game,world,onMenu);requestAnimationFrame(loop);}requestAnimationFrame(loop);
+let frameError=null;const updateGraphicsStatus=graphicsStatus({canvas:document.querySelector('#world'),renderer:world.renderer,pause:pauseOnLeave,skip:()=>intro.skip(),issue:()=>frameError?{error:frameError}:intro.active&&intro.loadError?{error:intro.loadError,canSkip:!world.loadError}:!intro.active&&game.state!=='title'&&world.loadError?{error:world.loadError}:null});
+let last=performance.now();function loop(now){requestAnimationFrame(loop);if(frameError){updateGraphicsStatus();return;}try{const elapsed=Math.max(0,(now-last)/1000),dt=Math.min(elapsed,.05);last=now;updateTutorialUI();updateCinematic();runningAudio.update(game,document.hidden);music.update(game.state,document.hidden,intro.active?intro.story:null);updateMusicControl();updatePauseControl();touch.update();ambience.update(game.state,document.hidden);if(intro.active||game.state==='title'){voices.update(game);siren.update(game,document.hidden);effects.update(game);}
+ if(updateGraphicsStatus())return;
+ if(intro.active){intro.warAudio.music.muted=!music.enabled;intro.update(dt,input,elapsed);return;}
+ if(game.state==='title'){document.body.classList.add('intro-title');updateUI(game,world,onMenu);return;}
+ document.body.classList.remove('intro-title');if(!world.loading)game.update(dt,input);voices.update(game);siren.update(game,document.hidden);effects.update(game);ambience.update(game.state,document.hidden);runningAudio.update(game,document.hidden);world.renderer.setClearColor(game.level.palette);world.draw(game,dt);updateUI(game,world,onMenu);
+}catch(error){frameError=error;pauseOnLeave();updateGraphicsStatus();console.error(error);}}requestAnimationFrame(loop);
