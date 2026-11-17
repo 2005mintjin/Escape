@@ -825,6 +825,28 @@
       "unit": 0.007
     },
     {
+      "source": "pistol-walk-passing.png",
+      "rect": [
+        120,
+        40,
+        310,
+        643
+      ],
+      "anchor": 188,
+      "unit": 0.003499222395023328
+    },
+    {
+      "source": "pistol-walk-passing.png",
+      "rect": [
+        661,
+        40,
+        310,
+        643
+      ],
+      "anchor": 188,
+      "unit": 0.003499222395023328
+    },
+    {
       "source": "player-pistol.png",
       "rect": [
         689,
@@ -834,6 +856,28 @@
       ],
       "anchor": 90,
       "unit": 0.007
+    },
+    {
+      "source": "pistol-walk-passing.png",
+      "rect": [
+        1206,
+        40,
+        310,
+        643
+      ],
+      "anchor": 188,
+      "unit": 0.003499222395023328
+    },
+    {
+      "source": "pistol-walk-passing.png",
+      "rect": [
+        1747,
+        40,
+        310,
+        643
+      ],
+      "anchor": 188,
+      "unit": 0.003499222395023328
     }
   ],
   "pistolRun": [

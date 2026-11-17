@@ -258,3 +258,11 @@ Git은 초기화되어 있습니다. `git add .` 및 `git commit`으로 기록�
 - 권총 달리기는 기존 4자세 사이에 pistol-run-passing.png의 발 교차 4자세를 추가한 8프레임 주기(16fps)입니다. 프레임별 기준점과 신체 크기를 맞췄습니다.
 - 사용하지 않는 구형 칼 이미지와 빈 튜토리얼 렌더링 모듈을 제거했습니다. 기존 모듈 분리를 유지하고 추가적인 구조 개편은 하지 않았습니다.
 - 이 변경 검증: `node --test tests/sprites.test.js tests/intro.test.js tests/run-audio.test.js`, `npm run build`, 개발 서버에서 `node e2e/render-fixes.mjs`. 이후에도 변경과 관련된 검사부터 실행합니다.
+
+## 권총 걷기·엄폐 탄환·짧은 인트로·강변 엔딩
+- 권총 걷기는 기존 보폭 사이에 pistol-walk-passing.png의 교차 자세 4개를 넣은 6프레임입니다. 달리기 8프레임과 별개이며 고정된 신체 크기와 기준점을 사용합니다.
+- 웅크려 벽 바로 뒤에 숨으면 적 탄환은 벽 경계를 넘는 순간 소멸합니다. 인접 틈에서 비스듬히 날아오는 탄환도 로컬 엄폐를 지킵니다. 벽 없는 틈, 서기, 조준 사격은 계속 노출됩니다. 아군 탄환은 기존 실제 벽 충돌을 유지합니다.
+- 인트로의 시공간 카드/검은 배경은 1.5초이며 프레임 속도가 낮아도 실제 경과 시간으로 진행합니다.
+- 마지막 작전 탈출 뒤 `src/ending`의 에필로그가 한 번 자동 재생됩니다. 강변에서 엘리엇과 재회하고 동쪽 수용소로 옮겨진 동료들의 소식을 들은 뒤 구조정에 함께 오릅니다. `data/endingDialogue.json`에서 대사·장면·시간을 수정합니다. E/Space/Enter 또는 터치의 계속 버튼, 일시정지와 탭 이탈 정지를 지원합니다. 종료 후 기존 결과 화면으로 돌아갑니다.
+- 엔딩의 강변 배경은 시작 시에만 불러오고, 인물은 기존 컷신 프레임을 재사용합니다. 새벽 음악은 기존 항구 음악 채널을 사용합니다.
+- 관련 검증: `node --test tests/projectiles.test.js tests/ending.test.js tests/sprites.test.js tests/intro.test.js tests/music.test.js tests/cutscene.test.js`, `npm run build`, 개발 서버에서 `node e2e/ending.mjs`.

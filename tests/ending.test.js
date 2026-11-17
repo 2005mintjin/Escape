@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {EndingStory,endingShots} from '../src/ending/story.js';
+import {introDelta} from '../src/intro/warSequence.js';
+import {IntroStory} from '../src/intro/story.js';
+import frames from '../data/spriteFrames.json' with {type:'json'};
+test('opening card lasts 1.5 seconds before the home scene',()=>{assert.equal(introDelta('opening',.05,.5),.5);const s=new IntroStory();s.start();s.update(1.49);assert.equal(s.mode,'opening');s.update(.01);assert.equal(s.mode,'home');});
+test('pistol walking includes four passing poses at the same body scale as existing strides',()=>{assert.equal(frames.pistolWalk.length,6);assert.equal(frames.pistolWalk.filter(f=>f.source==='pistol-walk-passing.png').length,4);for(const f of frames.pistolWalk)assert.ok(Math.abs(f.rect[3]*f.unit-2.25)<.02);});
+test('ending progresses from reunion through boarding to rescue and the promise to return',()=>{const s=new EndingStory();s.start();const seen=[];for(let i=0;i<100&&s.active;i++){seen.push(s.shot.id);s.update(1);}assert.equal(s.completed,true);for(const id of ['reunion','news','promise','boarding','rescue','departure'])assert.ok(seen.includes(id));assert.match(endingShots.find(s=>s.id==='news').text,/다른 대원/);assert.match(endingShots.find(s=>s.id==='rescue').text,/남은 사람/);});
+test('pause freezes the ending and next reveals text before changing shot; restart clears completion',()=>{const s=new EndingStory();s.start();s.paused=true;s.update(1);s.next();assert.equal(s.elapsed,0);s.paused=false;s.next();assert.equal(s.index,0);assert.equal(s.visibleText,s.shot.text);s.next();assert.equal(s.index,1);while(s.active){s.next();s.next();}assert.equal(s.completed,true);s.start();assert.equal(s.index,0);assert.equal(s.completed,false);});

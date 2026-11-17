@@ -9,4 +9,4 @@ export const WAR_DURATION=WAR_SHOTS.reduce((sum,shot)=>sum+shot.duration,0);
 export function warShot(elapsed){let start=0;for(const shot of WAR_SHOTS){if(elapsed<start+shot.duration)return {...shot,elapsed:Math.max(0,elapsed-start),progress:Math.max(0,(elapsed-start)/shot.duration)};start+=shot.duration;}return {...WAR_SHOTS.at(-1),elapsed:WAR_SHOTS.at(-1).duration,progress:1};}
 
 // Cinematic cues follow the recording clock; gameplay keeps its bounded physics step.
-export const introDelta=(mode,frameDelta,elapsed)=>mode==='cutscene'?Math.max(0,Math.min(elapsed,1)):frameDelta;
+export const introDelta=(mode,frameDelta,elapsed)=>['cutscene','opening','warcard','fade'].includes(mode)?Math.max(0,Math.min(elapsed,1)):frameDelta;

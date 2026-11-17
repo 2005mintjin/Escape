@@ -45,3 +45,4 @@
 - 이미지 로딩은 rendering/textures.js의 재시도/모바일 크기 제한/공유 Source를 사용한다. 아틀라스 UV는 image.width 대신 sourceSize()의 원본 크기를 사용한다. 선택적 배경 실패가 World.loading을 무한히 유지하지 않게 하고, 필수 로딩 오류 및 컨텍스트 손실은 graphicsStatus로 표시한다. 실패해도 다음 RAF 예약을 보존한다. 변경 시 texture-budget.test.js와 e2e/mobile-loading.mjs의 실제 요청 실패/컨텍스트 복구 및 정상 모바일 흐름을 검증한다.
 
 - 2026-11 사용자 지시: 변경된 기능과 직접 관련된 단위 테스트 및 짧은 브라우저 검증만 실행한다. 매번 전체 캠페인·전체 인트로·전체 테스트를 반복하지 않는다. 렌더링 수정은 관련 장면과 빌드로 확인한다. 서랍은 별도 덧그림/열림 애니메이션 없이 furniture.png의 책장 원본만 표시하고 기존 사진 상호작용은 유지한다.
+- 최종 작전 뒤 에필로그는 src/ending의 독립 타임라인/렌더링과 data/endingDialogue.json으로 관리한다. 메인 루프가 최종 clear를 한 번 가로채 ending으로 진입하고 종료 뒤 clear로 복귀한다. 엔딩 변경은 ending.test.js와 e2e/ending.mjs의 PC·터치 직접 종료 및 일시정지로 검증한다. 인트로 카드 시간은 1.5초이며 opening/warcard/fade도 실제 경과 시간을 사용한다.

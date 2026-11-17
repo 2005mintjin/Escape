@@ -1,0 +1,11 @@
+[
+ {"id":"arrival","duration":5,"speaker":"마리아","text":"…누구야? 거기, 부두 뒤에."},
+ {"id":"reunion","duration":6,"speaker":"엘리엇","text":"마리아? 정말 너야? 포격 뒤로… 다시는 못 보는 줄 알았어."},
+ {"id":"relief","duration":6,"speaker":"마리아","text":"나도 그래. 다친 곳은? 걸을 수 있겠어?"},
+ {"id":"news","duration":8,"speaker":"엘리엇","text":"괜찮아. 하지만 다른 대원들은 동쪽 수용소로 옮겨졌어. 마지막 수송차에 실리는 걸 봤어."},
+ {"id":"promise","duration":7,"speaker":"마리아","text":"그럼 아직 살아 있다는 거네. 돌아가서 위치를 전하자. 이번엔 누구도 두고 오지 않을 거야."},
+ {"id":"signal","duration":6,"speaker":"구조대원","text":"아군 둘 확인! 이쪽으로, 서둘러! 곧 동이 튼다!"},
+ {"id":"boarding","duration":6,"speaker":"엘리엇","text":"먼저 타. 난 바로 뒤에 있을게. 이제 혼자 뛰지 않아도 돼."},
+ {"id":"rescue","duration":7,"speaker":"마리아","text":"응. 같이 돌아가자. 그리고… 남은 사람들도, 반드시 데리러 가자."},
+ {"id":"departure","duration":7,"speaker":"그날의 기록","text":"우리는 그 강을 건넜다. 두 사람의 탈출은 끝났지만, 모두의 귀환은 아직 끝나지 않았다."}
+]
