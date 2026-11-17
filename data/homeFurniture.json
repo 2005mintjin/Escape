@@ -86,23 +86,5 @@
       199,
       307
     ]
-  },
-  "drawer": {
-    "source": "drawer-aligned.png",
-    "rect": [
-      1165,
-      184,
-      888,
-      110
-    ]
-  },
-  "drawerClosed": {
-    "source": "drawer-aligned.png",
-    "rect": [
-      112,
-      275,
-      862,
-      267
-    ]
   }
 }

@@ -849,6 +849,17 @@
       "unit": 0.0041
     },
     {
+      "source": "pistol-run-passing.png",
+      "rect": [
+        94,
+        89,
+        335,
+        573
+      ],
+      "anchor": 170,
+      "unit": 0.003935427574171029
+    },
+    {
       "source": "pistol-run.png",
       "rect": [
         626,
@@ -858,6 +869,17 @@
       ],
       "anchor": 177,
       "unit": 0.0041
+    },
+    {
+      "source": "pistol-run-passing.png",
+      "rect": [
+        637,
+        89,
+        335,
+        573
+      ],
+      "anchor": 170,
+      "unit": 0.003935427574171029
     },
     {
       "source": "pistol-run.png",
@@ -871,6 +893,17 @@
       "unit": 0.0041
     },
     {
+      "source": "pistol-run-passing.png",
+      "rect": [
+        1180,
+        89,
+        335,
+        573
+      ],
+      "anchor": 170,
+      "unit": 0.003935427574171029
+    },
+    {
       "source": "pistol-run.png",
       "rect": [
         1689,
@@ -880,6 +913,17 @@
       ],
       "anchor": 200,
       "unit": 0.0041
+    },
+    {
+      "source": "pistol-run-passing.png",
+      "rect": [
+        1723,
+        89,
+        335,
+        573
+      ],
+      "anchor": 170,
+      "unit": 0.003935427574171029
     }
   ],
   "pistolCrouch": [
